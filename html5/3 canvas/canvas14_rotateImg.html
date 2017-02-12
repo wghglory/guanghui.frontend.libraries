@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw an image</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="逆时针">
+<input type="button" value="顺时针">
+<div><img src="images/canvas13.png"></div>
+</body>
+<script>
+    var input = document.getElementsByTagName('input');
+    var img = document.getElementsByTagName('img')[0];
+
+    var image = new Image();
+    image.src = img.src;
+    image.onload = function () {
+        draw(img);
+    };
+
+    var now = 0;
+    function draw(obj) {
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        canvas.width = obj.width;
+        canvas.height = obj.height;
+        obj.parentNode.replaceChild(canvas, obj);
+
+        context.drawImage(obj, 0, 0);
+
+        input[0].onclick = function () {
+
+            if (now == 0) {
+                now = 3;
+            } else {
+                now--;
+            }
+
+            toChange();
+        };
+
+        input[1].onclick = function () {
+
+            if (now == 3) {
+                now = 0;
+            } else {
+                now++;
+            }
+
+            toChange();
+        };
+
+
+        function toChange() {
+            switch (now) {
+                case 1:
+//                    旋转90
+                    canvas.width = obj.height;
+                    canvas.height = obj.width;
+                    context.rotate(90 * Math.PI / 180);  //这样以左上角为顶点,顺时针转90度后,图片在可视区左侧,需要向右移动才能看到.
+                    context.drawImage(obj, 0, -obj.height);   //移动时x,y坐标方向也变了,x为竖直方向了
+                    break;
+
+//            旋转180
+                case 2:
+                    canvas.width = obj.width;
+                    canvas.height = obj.height;
+                    context.rotate(180 * Math.PI / 180);  //这样以左上角为顶点,顺时针转180度后,图片在可视区左上侧,需要向右下移动才能看到.
+                    context.drawImage(obj, -obj.width, -obj.height);
+                    break;
+
+                case 3:
+//                    旋转270
+                    canvas.width = obj.height;
+                    canvas.height = obj.width;
+                    context.rotate(270 * Math.PI / 180);
+                    context.drawImage(obj, -obj.width, 0);
+                    break;
+
+                case 0:
+//                    旋转360
+                    canvas.width = obj.width;
+                    canvas.height = obj.height;
+                    context.rotate(360 * Math.PI / 180);  //这样以左上角为顶点,顺时针转90度后,图片在可视区左侧,需要向右移动才能看到.
+                    context.drawImage(obj, 0, 0);   //移动时x,y坐标方向也变了,x为竖直方向了
+                    break;
+            }
+        }
+
+    }
+</script>
+</html>

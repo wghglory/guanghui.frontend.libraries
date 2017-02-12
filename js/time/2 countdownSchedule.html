@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            text-align: center;
+            background: #00ECB9;
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+
+        h1 {
+            color: #396;
+            font-weight: 100;
+            font-size: 40px;
+            margin: 40px 0 20px;
+        }
+
+        #clockdiv {
+            font-family: sans-serif;
+            color: #fff;
+            display: none;
+            font-weight: 100;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        #clockdiv > div {
+            padding: 10px;
+            border-radius: 3px;
+            background: #00BF96;
+            display: inline-block;
+        }
+
+        #clockdiv div > span {
+            padding: 15px;
+            border-radius: 3px;
+            background: #00816A;
+            display: inline-block;
+        }
+
+        .smalltext {
+            padding-top: 5px;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Countdown Clock</h1>
+    <div id="clockdiv">
+        <div>
+            <span class="day"></span>
+            <div class="smalltext">Days</div>
+        </div>
+        <div>
+            <span class="hour"></span>
+            <div class="smalltext">Hours</div>
+        </div>
+        <div>
+            <span class="minute"></span>
+            <div class="smalltext">Minutes</div>
+        </div>
+        <div>
+            <span class="second"></span>
+            <div class="smalltext">Seconds</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var second = Math.floor((t / 1000) % 60);
+            var minute = Math.floor((t / 1000 / 60) % 60);
+            var hour = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var day = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                'total': t,
+                'day': day,
+                'hour': hour,
+                'minute': minute,
+                'second': second
+            };
+        }
+
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daySpan = clock.querySelector('.day');
+            var hourSpan = clock.querySelector('.hour');
+            var minuteSpan = clock.querySelector('.minute');
+            var secondSpan = clock.querySelector('.second');
+
+            clock.style.display = 'block';
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daySpan.innerHTML = t.day;
+                hourSpan.innerHTML = ('0' + t.hour).slice(-2); // 从后面截取2位
+                minuteSpan.innerHTML = ('0' + t.minute).slice(-2);
+                secondSpan.innerHTML = ('0' + t.second).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timer);
+                    clock.style.display = 'none';
+                }
+            }
+
+            updateClock();
+            var timer = setInterval(updateClock, 1000);
+        }
+
+        // startDate is first, second is endDate
+        var schedule = [
+            ['Jul 25 2015', 'Sept 20 2015'],
+            ['Sept 21 2015', 'Jul 25 2016'],
+            ['Jul 25 2016', 'Aug 25 2018']
+        ];
+        // iterate over each element in the schedule
+        for (var i = 0; i < schedule.length; i++) {
+            var startDate = schedule[i][0];
+            var endDate = schedule[i][1];
+
+            // put dates in milliseconds for easy comparisons
+            var startMs = Date.parse(startDate);
+            var endMs = Date.parse(endDate);
+            var currentMs = Date.parse(new Date());
+
+            // if current date is between start and end dates, display clock
+            if (endMs > currentMs && currentMs >= startMs) {
+                initializeClock('clockdiv', endDate);
+            }
+        }
+    </script>
+</body>
+
+</html>

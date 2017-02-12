@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arc</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.moveTo(100, 200);
+
+    //context.arcTo(100, 100, 200, 100, 50);    //arc(x1, y1, x2, y2, radius)
+
+    //context.quadraticCurveTo(100, 100, 200, 100);
+
+    context.bezierCurveTo(100, 100, 200, 200, 200, 100);
+
+    context.stroke();
+</script>
+</html>

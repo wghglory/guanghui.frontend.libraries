@@ -1,0 +1,116 @@
+.list
+{
+    position: relative;
+
+    width: 180px;
+    margin: 100px;
+
+    color: #fff;
+
+    perspective: 800px;
+}
+
+.list h2
+{
+    line-height: 40px;
+
+    position: relative;
+    z-index: 2;
+
+    height: 40px;
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+
+    background: red;
+}
+
+.list div
+{
+    position: absolute;
+    z-index: 1;
+    top: 32px;
+    left: 0;
+
+    transition: 1.5s;   /* control shrink speed */
+    transform: rotateX(-90deg);    /* 默认隐藏，卷向屏幕内 */
+    transform-origin: top;
+
+    transform-style: preserve-3d;
+}
+
+/* modify first div top */
+.list > div
+{
+    top: 40px;
+}
+
+/* @keyframes duration | timing-function | delay |
+   iteration-count | direction | fill-mode | play-state | name
+  animation: 3s ease-in 1s 2 reverse both paused slidein;
+ */
+.list div.open
+{
+    /* 这里不要使用forwards因为收缩时候去掉open，似乎浏览器不知道从rotateX(0deg)变化到rotateX(-90deg)，transition不好使 */
+    transform: rotateX(0);     /* or use animation-fill-mode:forwards */
+    animation: 2s move;
+
+    /* animation-fill-mode: forwards; must after animation!!!*/
+    /* animation: 2s forwards move; */
+}
+
+@keyframes move
+{
+    0%
+    {
+        transform: rotateX(-90deg);
+    }
+
+    40%
+    {
+        transform: rotateX(10deg);
+    }
+
+    60%
+    {
+        transform: rotateX(-6deg);
+    }
+
+    80%
+    {
+        transform: rotateX(6deg);
+    }
+
+    100%
+    {
+        transform: rotateX(0deg);
+    }
+}
+
+.list span
+{
+    font: 14px/30px Arial;
+
+    display: block;
+
+    width: 180px;
+    height: 30px;
+
+    transition: 1s;
+    text-align: center;
+
+    background-color: #5cb85c;
+    box-shadow: inset 0 0 30px 20px rgba(0,0,0,1);
+}
+
+.list div.open > span
+{
+    box-shadow: inset 0 0 30px 10px rgba(0,0,0,0);
+}
+
+.list span:hover
+{
+    color: #000;
+    background: #ff0;
+}

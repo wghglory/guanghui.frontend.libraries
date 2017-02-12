@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #loadingSection{position:fixed;top:calc(50% - 70px);left:calc(50% - 60px);width:120px;height:140px;}
+        /* css3居中方法calc(50% - ?px) */
+
+        .loading{position:relative;width:120px;height:100px;animation:.5s upDown alternate infinite linear;background:url(img/loading-bottom.png) no-repeat;}
+        @keyframes upDown{
+            0%{transform:translateY(0);}
+            100%{transform:translateY(7px);}
+        }
+        .loading div{position:absolute;top:0;left:0;width:120px;height:100px;}
+        .pic-middle{animation:1s rotateAntiClockwise infinite linear;background:url(img/loading-middle.png) no-repeat;}
+        @keyframes rotateAntiClockwise{
+            0%{transform:rotate(0);}
+            100%{transform:rotate(-360deg);}
+        }
+        .pic-top{animation:1s rotateClockwise infinite linear;background:url(img/loading-top.png) no-repeat;}
+        @keyframes rotateClockwise{
+            0%{transform:rotate(0);}
+            100%{transform:rotate(360deg);}
+        }
+        .percent{font:18px/100px Arial;text-align:center;color:#f39;}
+        .picShadow{width:100px;height:40px;margin:0 auto;animation:.5s shadowScale alternate infinite linear;background:radial-gradient(closest-side,rgba(0,0,0,.5),rgba(0,0,0,0));}
+        @keyframes shadowScale{
+            0%{transform:scale(.8);opacity:.5;}
+            100%{transform:scale(1);opacity:1;}
+        }
+    </style>
+</head>
+
+<body>
+    <section id="loadingSection">
+        <div class="loading">
+            <div class="pic-middle"></div>
+            <div class="pic-top"></div>
+            <div class="percent">0%</div>
+        </div>
+        <div class="picShadow"></div>
+    </section>
+</body>
+
+</html>

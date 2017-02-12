@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+<input type="button" value="click to change color and animate" id="btn1">
+</body>
+<script src="js/jCanvaScript.1.5.18.min.js"></script>
+<script>
+    var input = document.getElementById('btn1');
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    jc.start('c1', true);   //true为重绘,这样才能click
+
+    //jc.rect(100, 100, 50, 50, '#ff0000', 1);   //最后一位0空心,1实心
+
+    jc.circle(100, 100, 50, 'rgba(255,0,0,0.5)', 1).click(function () {
+        alert('clicked');   //需要在start中第二参数true,重绘
+    }).draggable().id('circle1');
+
+    //jc.start('c1');
+
+    input.onclick = function () {
+        jc('#circle1').color('#ffff00').animate({
+            x: 200, y: 200, radius: 5
+        }, 2000);   //2000 is 2 second
+    };
+
+</script>
+</html>

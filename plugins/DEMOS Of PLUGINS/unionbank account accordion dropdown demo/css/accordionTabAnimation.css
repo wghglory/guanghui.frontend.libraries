@@ -1,0 +1,41 @@
+.container{width:1024px;margin:40px auto 0;}
+.fl{float:left;}
+.fr{float:right;}
+.clear{zoom:1;}
+.clear:after{display:block;clear:both;content:'';}
+.accordion{width:300px;}
+.accordion h3{font:24px/24px Arial;position:relative;z-index:1;padding:8px;color:#fff;background-color:#7fbcdb;}
+.accordion h3.active{background-color:#337ab7;}
+.accordion h3 span{position:absolute;top:18px;right:20px;}
+.accordion h3 span.caret{border-top-color:#fff;}
+.accordion h3 span.caret-up{border-bottom-color:#fff;}
+.accordion h3 + div{position:absolute;top:0;width:100%;}
+.accordion div{font:16px Arial;display:none;}
+.accordion > div{position:relative;display:block;    /*margin:6px 0*/padding:3px 0;}
+
+/*except first level div children, to hide div under h3*/
+.accordion ul{margin:0;padding:0;}
+.accordion li{padding:8px;color:#848b8e;border:1px solid #ccc;border-top:none;}
+.accordion li:hover{color:#000;background:#f5f5f5;}
+.accordion li.active{color:#000;background:#b5b1b1;}
+.rightSection{width:694px;padding-left:30px;}
+.content{position:relative;overflow:hidden;}   /*overflow hidden解决了下部可能由于某个tab内容过高，虽然visibility hidden但占据页面导致下部页面有距离的问题*/
+.content > div{position:absolute;visibility:hidden;width:100%;}  /*这里如果display:none, js里*/
+.content > div.fadeIn{visibility:visible;-webkit-animation:.7s fadeInAn;animation:.7s fadeInAn;}
+.content > div.fadeOut{visibility:hidden;-webkit-animation:.5s fadeOutAn;animation:.5s fadeOutAn;}
+@keyframes fadeInAn{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+@keyframes fadeOutAn{
+    0%{visibility:visible;opacity:1;}
+    100%{opacity:0;}
+}
+@-webkit-keyframes fadeInAn{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+@-webkit-keyframes fadeOutAn{
+    0%{visibility:visible;opacity:1;}
+    100%{opacity:0;}
+}

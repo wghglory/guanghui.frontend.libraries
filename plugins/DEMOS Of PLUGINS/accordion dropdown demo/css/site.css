@@ -1,0 +1,92 @@
+body{font-family: Arial;padding:0;margin: 0;}
+.container{width:1024px;margin: 0 auto;position: relative;padding:20px 0 0 0;}
+
+p.warning{font-style:italic;font-weight:600;padding: 15px;margin:0 0 20px 0;color:#a94442;background: #f2dede;border:1px solid #EBCCD2;font-size:18px;}
+
+
+/*common start*/
+.fl{float:left;}
+.fr{float:right;}
+.clear{zoom:1;}
+.clear:after{content:""; display:block;clear:both;}
+.panel{border:1px solid #337ab7;box-shadow: 2px 2px 16px grey;}
+h2{background: #337ab7;padding:0 0 0 14px;margin: 0;height:44px;color:#fff;line-height: 44px;font-size: 20px;}
+/*common end*/
+
+/*left accordion area start*/
+.filters{width: 260px;margin: 0;cursor: pointer;}
+.filters>p{background: #000 ;margin:0 0 6px 0;color:#fff;padding: 6px;font-size:16px;}
+.accordion{width: inherit;}
+.accordion h3{padding:8px; box-shadow: 2px 2px 4px grey;margin:0;color:#fff;height: 82px;}
+.accordion h3 span{top:78px;left:12px;}
+.accordion h3 span.money{color: #fff;position: absolute;left:142px;top:40px;font-size:24px;}
+.accordion h3:nth-of-type(1){background:#7fbcdb url("../images/leftnav_deposits.png") no-repeat 30px 10px;}
+.accordion h3:nth-of-type(2){background:#7fbcdb url("../images/leftnav_loans.png") no-repeat 30px 10px;}
+.accordion h3:nth-of-type(3){background:#7fbcdb url("../images/leftnav_investments.png") no-repeat 30px 10px;}
+.accordion h3.active{background-color: #337ab7;}
+/*left accordion area end*/
+
+/*right content section start*/
+.rightSection{width: 734px;}
+/*right content section end*/
+
+/*account detail start*/
+/*account information start*/
+.account{margin-bottom: 20px;}
+.account ul{padding: 0 24px;margin:0;}
+.account li{min-height: 24px;line-height: 24px;border-bottom: 1px dotted #BCBCBC;list-style: none;font-size: 14px;padding: 4px;}
+.account li:last-of-type {border:none;}
+.account li span {display: inline-block;/*width:258px*/ width:50%;}   
+.account li span label{margin-right: 8px;}
+/*account information end*/
+
+/*customer relationship table start*/
+.customerRel{width:320px;}
+/*.customerRel table{width: 100%;padding: 0;margin: 0;border-collapse: collapse;text-align: center;}
+.customerRel table td,th{border:1px solid #BCBCBC;padding: 4px;}*/
+table{width: 100%;padding: 0;margin: 0;border-collapse: collapse;text-align: center;font-size: 14px;}
+table td,th{padding: 8px;}
+th{border-bottom: 2px solid #bcbcbc;}
+table tr{border:1px solid #BCBCBC;border-left:none;border-right: none;}
+table tr:last-of-type{border:none;}
+/*customer relationship table end*/
+
+/*balance starts*/
+.balance{margin-bottom: 20px;}
+.balance ul{padding: 0 24px;margin:0;}
+.balance li{min-height: 24px;line-height: 24px;border-bottom: 1px dotted #BCBCBC;list-style: none;font-size: 14px;padding: 4px;}
+.balance li:last-of-type {border:none;}
+.balance li span {display: inline-block;/*width:258px*/ width:50%;}   
+.balance li span label{margin-right: 8px;}
+/*balance end*/
+
+/*transaction table start*/
+.transaction{border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+.transaction label{font-weight: bold;padding-left:18px;font-size: 14px;}
+.filter{padding:8px 0;}
+.transaction table{font-size: 12px;}
+.transaction th{background: #dff0d8;font-size: 14px;}
+.transaction tr:nth-child(2n){background-color: #F5F5F5;}
+.tableWrap{max-height: 476px;overflow-y: auto;overflow-x:hidden;}
+/*transaction table end*/
+/*account detail end*/
+
+/*other information start*/
+.otherInfo-top{padding:8px 42px;}
+.otherInfo-top li{padding:8px;border-bottom: 1px dotted #ccc;font-size: 14px;}
+.otherInfo-top li span {display: inline-block;width:50%;}
+.otherInfo-top li span label,.otherInfo-bottom li span label{padding-right:10px;}
+.monthToDate{font-style: italic;font-size: 14px;padding: 16px 26px;margin:0;}
+.otherInfo-bottom{padding:8px 42px;}
+.otherInfo-bottom li{float:left;width:300px;padding:8px;border-bottom: 1px dotted #ccc;font-size: 14px;}
+.otherInfo-bottom span{width:50%;}
+.otherInfo-bottom li:last-of-type{border:none;padding-bottom: 12px;}
+.otherInfo-bottom li:nth-last-of-type(2){border:none;padding-bottom: 12px;}
+
+.hold{height: 210px;}
+.hold textarea{resize: none;height:148px;width: 348px;margin:0;padding: 8px;background-color: #EFF0F1;overflow: auto;outline: none;border:1px solid #ccc}
+/*other information end*/
+
+
+
+

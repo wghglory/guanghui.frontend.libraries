@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <style>
+    .nav{display:flex;margin:0;padding:50px;}
+    .nav li{padding:0 4px;list-style:none;perspective:100px;}
+    .nav a{font:14px/20px '宋体';position:relative;display:inline-block;width:50px;height:20px;transition:.5s;transform-origin:center center -10px;text-decoration:none;transform-style:preserve-3d;}
+    .nav span{position:absolute;top:0;left:0;width:100%;text-align:center;background-color:#14f97e;backface-visibility:hidden;}
+
+    /* .nav span:nth-of-type(2){transform:rotateX(-90deg);transform-origin:top;}  这样文字方向不对 */
+
+    /* style1 上面朝前，正面朝下
+    .nav span:nth-of-type(2){top:-20px;transform:rotateX(90deg);transform-origin:bottom;background-color:#0aeec2;}
+    .nav a:hover{transform:rotateX(-90deg);} */
+
+    /* style2 下面朝前，正面朝上*/
+    .nav span:nth-of-type(2){top:20px;transform:rotateX(-90deg);transform-origin:top;background-color:#0aeec2;}
+    .nav a:hover{transform:rotateX(90deg);}
+
+    </style>
+</head>
+
+<body>
+    <ul class="nav">
+        <li>
+            <a href="#">
+                <span>选项一</span>
+                <span>选项1</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>选项二</span>
+                <span>选项2</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>选项三</span>
+                <span>选项3</span>
+            </a>
+        </li>
+    </ul>
+</body>
+
+</html>

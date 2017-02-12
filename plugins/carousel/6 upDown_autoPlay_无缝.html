@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>妙味课堂-www.miaov.com</title>
+    <style>
+		body,ul,ol{margin:0;padding:0;}
+		li{ list-style:none;}
+		img{ border:none; vertical-align:top; }
+
+		#box{width:470px;height:150px; position:relative; margin:30px auto; overflow:hidden;}
+		ul{ width:470px; position:absolute;left:0; top:0; z-index:1;}
+		ul li{width:470px;}
+		ol{z-index:2; width:120px; position:absolute;right:10px; bottom:10px;}
+		ol li{ width:20px;height:20px; float:left;margin:0 2px; background:#fff; color:#f60; line-height:20px; text-align:center;}
+		ol .active{ background:#f60; color:#fff;}
+    </style>
+    <script type="text/javascript" src="move.js"></script>
+    <script>
+
+	// 当显示最后一张图时，把第一张图定位到ul外下方。
+	// 然后运动显示第一张图，此时取消定位，其他图片跟着第一张图
+
+    window.onload = function() {
+        var oUl = document.getElementsByTagName('ul')[0];
+        var aLiUl = oUl.getElementsByTagName('li');
+
+        var oOl = document.getElementsByTagName('ol')[0];
+        var aLiOl = oOl.getElementsByTagName('li');
+
+        var oneHeight = aLiUl[0].offsetHeight;
+
+        //autoplay parameters
+        var iNow = 0;   //iNow is current number of Ol li:  1（自动播放到第二张）2 3 4 0（第一张）
+        var imgNow = 0;  //显示的图片序号：					1 (自动播放到第二张）2 3 4 5 (第一张)
+        var timer = null;
+        var oBox = document.getElementById('box');
+
+        for (var i = 0; i < aLiOl.length; i++) {
+            aLiOl[i].index = i;
+            aLiOl[i].onmouseover = function() {
+                if (iNow == 0) {  //还原
+                    aLiUl[0].style.position = 'static';
+                    oUl.style.top = 0;
+                    imgNow = 0;
+                }
+
+                for (var i = 0; i < aLiOl.length; i++) {
+                    aLiOl[i].className = '';
+                }
+                this.className = 'active';
+
+                iNow = this.index;
+                imgNow = this.index;
+
+                startMove(oUl, {
+                    top: -this.index * oneHeight
+                });
+
+            };
+        }
+
+		//autoplay part
+        timer = setInterval(autoPlay, 2000);
+
+        oBox.onmouseover = function() {
+            clearInterval(timer);
+        };
+        oBox.onmouseout = function() {
+            timer = setInterval(autoPlay, 2000);
+        };
+
+        function autoPlay() {
+
+            if (iNow == 0) { //第一张图时还原
+                aLiUl[0].style.position = 'static';
+                oUl.style.top = 0;
+                imgNow = 0;
+            }
+
+            if (iNow == aLiOl.length - 1) { //最后一张图
+                iNow = 0;
+                aLiUl[0].style.position = 'relative';   //在最后一张图时，把第一张图拉到ul下方，准备在inow = 0时显示。当inow=0时，取消定位，这样2，3，4后续图片重新跟在第一张图下面
+                aLiUl[0].style.top = aLiUl.length * oneHeight + 'px';
+            } else {
+                iNow++;
+            }
+
+            imgNow++;
+
+			console.log(iNow + ', ' + imgNow);
+
+            for (var i = 0; i < aLiOl.length; i++) {
+                aLiOl[i].className = '';
+            }
+            aLiOl[iNow].className = 'active';
+            startMove(oUl, {
+                top: -imgNow * oneHeight   //imgNow 1-5
+            });
+
+        }
+
+    };
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <ul>
+            <li><img src="images/1.jpg" alt="" /></li>
+            <li><img src="images/2.jpg" alt="" /></li>
+            <li><img src="images/3.jpg" alt="" /></li>
+            <li><img src="images/4.jpg" alt="" /></li>
+            <li><img src="images/5.jpg" alt="" /></li>
+        </ul>
+        <ol>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+    </div>
+</body>
+
+</html>

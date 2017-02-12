@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,ol {
+            list-style: none;
+        }
+
+        html,body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #nav {
+            position: fixed;
+            top: 0;
+            left: 250px;
+        }
+
+        #nav li {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #000;
+            float: left;
+        }
+
+        #content {
+            width: 100%;
+            height: 100%;
+        }
+
+        #content li {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <ol id="nav">
+        <li>首页</li>
+        <li>关注</li>
+        <li>动态</li>
+        <li>风格</li>
+        <li>作品</li>
+    </ol>
+    <ul id="content">
+        <li>首页content</li>
+        <li>关注content</li>
+        <li>动态content</li>
+        <li>风格content</li>
+        <li>作品content</li>
+    </ul>
+    <script>
+        var nav = document.getElementById('nav');
+        var navLis = nav.children;
+        var content = document.getElementById('content');
+        var contentLis = content.children;
+        var bgColor = ["pink", "purple", "orange", "blue", "green"];
+
+        var leader = 0,
+            target = 0,
+            timer = null;
+        for (var i = 0; i < contentLis.length; i++) {
+            contentLis[i].style.backgroundColor = bgColor[i];
+            navLis[i].style.backgroundColor = bgColor[i];
+            navLis[i].index = i; // 记录当前的索引号
+            navLis[i].onclick = function() {
+                target = contentLis[this.index].offsetTop;
+                clearInterval(timer);
+                timer = setInterval(function() {
+                    leader = leader + (target - leader) / 10;
+                    window.scrollTo(0, leader); // 屏幕滑动
+                }, 30);
+
+                // // wrong! scrollY readonly
+                // startMove(window,{"scrollY":target});
+            };
+        }
+    </script>
+</body>
+
+</html>

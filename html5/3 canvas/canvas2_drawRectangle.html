@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw a rectangle by path</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400">
+    your browser doesn't support canvas.
+</canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.beginPath();
+    context.rect(50, 50, 100, 100);
+    context.closePath();
+    context.fill();
+
+//    context.clearRect(0, 0, canvas.width, canvas.height);
+</script>
+</html>

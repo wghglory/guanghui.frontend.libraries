@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>旋转木马轮播图</title>
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="slide">
+            <ul>
+                <li>
+                    <a href="#"><img src="images/slidepic1.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic2.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic3.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic4.jpg" alt="" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="images/slidepic5.jpg" alt="" /></a>
+                </li>
+            </ul>
+            <div class="arrow">
+                <a href="#" class="prev"></a>
+                <a href="#" class="next"></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="js/move.js"></script>
+<script>
+    var slider = document.querySelector('.slide');
+    var lis = slider.getElementsByTagName('li'); // 所有要操作的盒子
+    var arrow = document.querySelector('.arrow'); // 三角
+
+    slider.onmouseover = function() { // 鼠标经过显示和隐藏 左右两个箭头
+        startMove(arrow, {
+            'opacity': 100
+        });
+    };
+    slider.onmouseout = function() {
+        startMove(arrow, {
+            'opacity': 0
+        });
+    };
+
+    //  存储了每个图片的信息
+    var json = [{ //  1
+        width: 400,
+        top: 20,
+        left: 50,
+        opacity: 20,
+        z: 2
+    }, { // 2
+        width: 600,
+        top: 70,
+        left: 0,
+        opacity: 80,
+        z: 3
+    }, { // 3
+        width: 800,
+        top: 100,
+        left: 200,
+        opacity: 100,
+        z: 4
+    }, { // 4
+        width: 600,
+        top: 70,
+        left: 600,
+        opacity: 80,
+        z: 3
+    }, { //5
+        width: 400,
+        top: 20,
+        left: 750,
+        opacity: 20,
+        z: 2
+    }];
+    //  两个按钮点击事件
+    // 函数节流
+    var allMoveDone = true; //  用来控制函数节奏的 变量
+    var anchors = arrow.children;
+
+    changePic();
+
+    for (var i = 0; i < anchors.length; i++) {
+        anchors[i].onclick = function() {
+            if (this.className == 'prev') {
+                // 移除第一个,放到json最后一个：左移
+                if (allMoveDone == true) {
+                    allMoveDone = false; // 点击完毕之后，立马取反
+                    changePic(false);
+                }
+
+            } else {
+                // 把最后一个json删除,并且把最后一个添加到json第一个位置: 右移
+                if (allMoveDone == true) {
+                    allMoveDone = false;
+                    changePic(true);
+                }
+            }
+        }
+    }
+
+    function changePic(direction) {
+        if (direction) {
+            // 把最后一个json删除,并且把最后一个添加到json第一个位置
+            json.unshift(json.pop());
+        } else {
+            // 移除第一个,放到json最后一个
+            json.push(json.shift());
+        }
+
+        for (var i = 0; i < json.length; i++) {
+            startMove(lis[i], {
+                width: json[i].width,
+                top: json[i].top,
+                left: json[i].left,
+                opacity: json[i].opacity,
+                zIndex: json[i].z
+            }, function() {
+                allMoveDone = true;
+            });
+        }
+    }
+</script>

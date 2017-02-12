@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arc</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+    var num = 0;
+
+    var num2 = 0;
+    var value = 1;
+
+    context.translate(100, 100);
+
+    //    旋转
+    //    setInterval(function () {
+    //        num++;
+    //        context.save();
+    //        context.clearRect(-100, -100, canvas.width, canvas.height);
+    //        context.rotate(num * Math.PI / 180);   //因为rotate会累加,所以需要封闭起来,用save and restore.
+    //        context.translate(-50, -50);  //移动到中心点旋转
+    //        context.fillRect(0, 0, 100, 100);
+    //        context.restore();
+    //    }, 30);
+
+    //旋转并放大缩小
+    setInterval(function () {
+        num++;
+        context.save();
+        context.clearRect(-100, -100, canvas.width, canvas.height);
+
+        if (num2 == 100) {
+            value = -1;
+        } else if (num2 == 0) {
+            value = 1;
+        }
+        num2 += value;
+        context.scale(num2 / 50, num2 / 50);
+
+        context.rotate(num * Math.PI / 180);   //因为rotate会累加,所以需要封闭起来,用save and restore.
+        context.translate(-50, -50);  //移动到中心点旋转
+        context.fillRect(0, 0, 100, 100);
+        context.restore();
+    }, 10);
+</script>
+</html>

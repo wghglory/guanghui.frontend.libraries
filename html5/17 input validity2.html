@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+</head>
+
+<body>
+    <form action="#" id="form">
+        <input type="number" step="2" max="10" min="0" value="0" name="name" id="text" required />
+        <input type="button" value="按钮" id="btn" />
+        <input type="submit" />
+    </form>
+    <script>
+        var oText = document.getElementById("text");
+        var oBtn = document.getElementById("btn");
+        var oForm = document.getElementById("form");
+        var oV = oText.validity;
+        /*
+            valid 验证通过的时候 返回true 否则返回false
+            八项子验证 验证通过的时候 返回false 否则 返回true
+            当八项子验证 都返回false的时候，valid返回true
+            当八项子验证 有一项返回true的时候，valid返回false
+            input.addEventListener('invalid',fn,false) 如果验证通过这个事件就不执行了
+
+        */
+        oText.addEventListener('invalid', fn, false);
+
+        function fn(e) {
+            alert('invalid detected');
+            if (oV.stepMismatch) {
+                alert("当前值和要求规则不匹配");
+                e.preventDefault();
+            }
+        }
+        oBtn.onclick = function() {
+            alert(oV.stepMismatch); //输入值为空 返回true 否则 返回false
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="div1" class="box" title="hello">this is div</div>
+	<div class="box">div2</div>
+
+</body>
+<script>
+	//var div = document.querySelector('[title=hello]');
+	var div = document.querySelector('.box');   //.querySelector('#div1');
+	alert(div.length);  //undefined... because querySelector doesn't return a list, it actually returns the first.
+	div.style.background = 'yellow';
+
+
+	// var divs = document.querySelectorAll('.box');
+	// for(var i=0;i<divs.length;i++){
+	// 	divs[i].style.cssText = 'border: 2px solid red';
+	// }
+
+
+	var divs = document.getElementsByClassName('box');
+	for(var i=0;i<divs.length;i++){
+		divs[i].style.cssText = 'border: 2px solid red';
+	}
+</script>
+</html>

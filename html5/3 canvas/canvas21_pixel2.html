@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直接创建</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" width="400" height="400"></canvas>
+</body>
+<script>
+    //    直接创建像素
+
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    var img = context.createImageData(100, 100);
+    for (var i = 0; i < img.width * img.height; i++) {
+        img.data[4 * i] = 255;
+        img.data[4 * i + 1] = 0;
+        img.data[4 * i + 2] = 0;
+        img.data[4 * i + 3] = 100;
+    }
+    context.putImageData(img, 100, 100);
+</script>
+</html>

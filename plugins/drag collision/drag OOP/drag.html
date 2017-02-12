@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽的组件开发</title>
+	<style>
+	#div1{ width:100px; height:100px; background:red; position:absolute;}
+	#div2{ width:100px; height:100px; background:yellow; position:absolute; left:100px;}
+	#div3{ width:100px; height:100px; background:blue; position:absolute; left:200px;}
+	#div4{ width:100px; height:100px; background:green; position:absolute; left:300px;}
+	</style>
+</head>
+
+<body>
+	<div id="div1"></div>
+	<div id="div2"></div>
+	<div id="div3"></div>
+	<div id="div4"></div>
+	<script src="drag.js"></script>
+	<script>
+		// 组件开发 : 多组对象，像兄弟之间的关系( 代码复用的一种形式 )
+		// 目前的问题： 1是d1 init只有一个参数，这样内部调用toDown，toUp报错，所以传json
+		// 2是d4我只想在鼠标释放时出发byebye，但目前程序是在按下时候触发，顺序有问题
+		var d1 = new Drag('div1');
+		d1.init({}); //配置参数
+
+		var d2 = new Drag('div2');
+		d2.init({
+			toDown: function() {
+				document.title = 'hello';
+				document.body.style.background = 'black';
+			}
+		});
+
+		var d3 = new LimitDrag('div3');
+		d3.init({
+			toDown: function() {
+				document.title = '妙味';
+			},
+			toUp: function() {
+				document.title = '课堂';
+			}
+		});
+
+		var d4 = new LimitDrag('div4');
+		d4.init({
+			toUp: function() {
+				document.title = 'beybye';
+			}
+		});
+	</script>
+</body>
+
+</html>

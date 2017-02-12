@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <style>
+    #div1 {
+        width: 210px;
+        height: 210px;
+        background: url(1.jpg) no-repeat;
+        position: absolute;
+    }
+    </style>
+    <script>
+    //return false : 阻止默认事件
+
+    //1.解决拖拽图片的bug
+
+    //2.IE8之前的版本 : 选中元素就会有BUG
+
+    //setCapture() : 全局捕获( 就是生成了一个透明的层 )
+    //releaseCapture() : 释放全局捕获 ( 删除了这个层 )
+
+    window.onload = function() {
+        var oDiv = document.getElementById('div1');
+
+        var disX = 0;
+        var disY = 0;
+
+        oDiv.onmousedown = function(ev) {
+            var ev = ev || window.event;
+            disX = ev.clientX - oDiv.offsetLeft;
+            disY = ev.clientY - oDiv.offsetTop;
+
+            if (oDiv.setCapture) {
+                oDiv.setCapture();
+            }
+
+            document.onmousemove = function(ev) {
+                var ev = ev || window.event;
+                oDiv.style.left = ev.clientX - disX + 'px';
+                oDiv.style.top = ev.clientY - disY + 'px';
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+
+                if (oDiv.releaseCapture) {
+                    oDiv.releaseCapture();
+                }
+
+            };
+
+            return false;
+
+        };
+
+
+
+    };
+    </script>
+</head>
+
+<body>
+    <div id="div1">111111111111111111111</div>
+</body>
+
+</html>

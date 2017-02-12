@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>琴弦文字列表</title>
+    <style>
+        #list {
+            width: 302px;
+            margin: 50px auto;
+            padding: 0;
+            list-style: none;
+        }
+
+        #list li {
+            height: 30px;
+            font: 12px/30px "宋体";
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        #list span {
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <ul id="list">
+        <li>妙味琴弦文字列表图片高斯模糊切换1</li>
+        <li>妙味琴弦文字列表图片高斯模糊切换22</li>
+        <li>妙味琴弦文字列表图片高斯模糊切换333</li>
+        <li>妙味琴弦文字列表图片高斯模糊切换4444</li>
+        <li>妙味琴弦文字列表图片高斯模糊切换55555</li>
+    </ul>
+    <script src="js/tweenMove.js"></script>
+    <script>
+        var ul = document.getElementById('list');
+        var lis = ul.children;
+
+        var oneLiHeight = lis[0].offsetHeight;
+
+        for (var i = 0; i < lis.length; i++) {
+            var liHtml = lis[i].innerHTML;
+            lis[i].innerHTML = '';
+
+            // 每个li中每个文字加span
+            for (var j = 0; j < liHtml.length; j++) {
+                lis[i].innerHTML += '<span>' + liHtml[j] + '</span>';
+            }
+
+            // 转换成定位
+            var spans = lis[i].children; //某一行的span集合
+            for (var j = 0; j < spans.length; j++) {
+                spans[j].style.left = spans[j].offsetLeft + 'px';
+                spans[j].style.top = spans[j].offsetTop + 'px';
+                spans[j].startTop = spans[j].offsetTop;
+            }
+            for (var j = 0; j < spans.length; j++) {
+                spans[j].style.position = 'absolute';
+
+                (function(spans, index) { // pass spans in a row and each index of span
+
+                    var startY = 0;
+                    var oneSpanHeight = spans[0].offsetHeight;
+
+                    spans[index].onmouseover = function(e) {
+                        startY = e.clientY;
+                    };
+
+                    spans[index].onmousemove = function(e) {
+                        var distance = e.clientY - startY;
+                        var sign = distance > 0 ? 1 : -1; //move down 1, move up -1
+
+                        // span移动范围在li高度范围内
+                        if (this.startTop + distance >= 0 && this.startTop + distance < (oneLiHeight - oneSpanHeight)) {
+                            // this.style.top = this.startTop + distance + 'px';
+
+                            /*
+                                假设 选中 8  move 6px
+                                0 0
+                                1 0
+                                2 0
+                                3 1
+                                4 2
+                                5 3
+                                6 4
+                                7 5
+                                8 6
+                                9 5
+                                10 4
+                                11 3
+                                12 2
+                                13 1
+                                14 0
+                                15 0
+                                16 0
+                                。。。
+                            */
+                            for (var k = 0; k < spans.length; k++) {
+                                if (Math.abs(distance) > Math.abs(index - k)) {
+                                    spans[k].style.top = spans[k].startTop + (Math.abs(distance) - Math.abs(index - k)) * sign + "px";
+                                } else {
+                                    spans[k].style.top = spans[k].startTop + "px";
+                                }
+                            }
+                        }
+                    };
+
+                    spans[index].onmouseout = function(e) {
+                        // this.style.top = this.startTop + 'px';
+
+                        for (var k = 0; k < spans.length; k++) {
+                            tweenMove(spans[k], {
+                                top: spans[k].startTop
+                            }, 500, "elasticOut");
+                        }
+                    };
+
+                })(spans, j);
+            }
+        }
+    </script>
+</body>
+
+</html>

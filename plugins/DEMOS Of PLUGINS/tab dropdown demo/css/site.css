@@ -1,0 +1,64 @@
+body{font-family: Arial;}
+.container{padding: 4px;padding-bottom: 50px;width:1024px;margin:0 auto;}
+p.warning{margin-bottom:20px;color:#a94442;font-style:italic;font-weight:600;background: #f2dede;border:1px solid #EBCCD2;padding: 15px;border-radius: 6px;}
+
+/*common start*/
+.fl{float:left;}
+.clear{zoom:1;}
+.clear:after{content:""; display:block;clear:both;}
+.panel{border:1px solid #337ab7;border-radius: 6px;}
+h2{background: #337ab7;padding:0 0 0 14px;margin: 0;height:44px;color:#fff;line-height: 44px;font-size: 20px;}
+/*common end*/
+
+/*account information start*/
+.account{width: 634px;margin-bottom: 40px;}
+.account li {min-height: 24px;line-height: 24px;}
+.account ul{padding: 0 0 0 8px;margin:0;}
+.account li{border-bottom: 1px dotted #BCBCBC;list-style: none;font-size: 14px;padding: 4px;}
+/*li span:first-of-type {padding: 0 40px 0 10px;}*/
+.account li span {padding: 0 40px 0 10px;display: inline-block;width:258px /*40%*/;}   
+.account li span label{margin-right: 8px;}
+/*account information end*/
+
+/*customer relationship table start*/
+.customerRel{width:290px;}
+/*.customerRel table{width: 100%;padding: 0;margin: 0;border-collapse: collapse;text-align: center;}
+.customerRel table td,th{border:1px solid #BCBCBC;padding: 4px;}*/
+table{width: 100%;padding: 0;margin: 0;border-collapse: collapse;text-align: center;font-size: 14px;}
+table td,th{padding: 8px;}
+th{border-bottom: 2px solid #bcbcbc;}
+table tr{border:1px solid #BCBCBC;border-left:none;border-right: none;}
+/*customer relationship table end*/
+
+/*balance starts*/
+.balance{width:300px;margin-left: 26px;}
+.balance li {min-height: 24px;line-height: 24px;}
+.balance label{width:148px;display: inline-block;padding:0 0 0 10px; }
+.balance li{border-bottom: 1px dotted #BCBCBC;list-style: none;font-size: 14px;padding: 4px;}
+.balance ul{padding: 0 0 0 8px;margin:0;}
+/*balance end*/
+
+/*transaction table start*/
+.transaction{border-bottom-right-radius: 0;border-bottom-left-radius: 0}
+.transaction h2{margin-bottom: 20px;}
+.transaction label{font-weight: bold;padding-left:18px;font-size: 14px;}
+.filter{margin-bottom: 16px;}
+.transaction table{font-size: 13px;}
+.transaction th{background: #dff0d8;font-size: 15px;}
+.transaction tr:nth-child(2n){background-color: #F5F5F5;}
+.tableWrap{max-height: 480px;overflow-y: auto;overflow-x:hidden;}
+/*transaction table end*/
+
+/*other information start*/
+.monthToDate{font-style: italic;font-size: 14px;padding: 8px 8px 8px 26px;margin:0;}
+.monthToDate_list li{float:left;width:330px;}
+.monthToDate_list span{width:80%;}
+.otherInfo{width: 676px;}
+.otherInfo li{border-bottom: 1px dotted #BCBCBC;list-style: none;font-size: 14px;padding: 4px;}
+/*li span:first-of-type {padding: 0 40px 0 10px;}*/
+.otherInfo li span {padding: 0 40px 0 10px;display: inline-block;width:258px /*40%*/;} 
+.otherInfo li span label{margin-right: 8px;}
+.otherInfo li {min-height: 24px;line-height: 24px;}
+.hold{width:300px;height: 202px;margin-top: 40px;}
+.hold textarea{resize: none;width:282px;height:140px;margin:0;padding: 8px;background-color: #EFF0F1;overflow: auto;outline: none;border:1px solid #ccc}
+/*other information end*/

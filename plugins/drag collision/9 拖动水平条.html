@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .scroll {
+            width: 400px;
+            height: 8px;
+            background-color: #ccc;
+            margin: 100px;
+            position: relative;
+        }
+
+        .bar {
+            width: 10px;
+            height: 22px;
+            background-color: #369;
+            position: absolute;
+            top: -7px;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .mask {
+            width: 0;
+            height: 100%;
+            background-color: #369;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="scroll" id="scrollBar">
+        <div class="bar"></div>
+        <div class="mask"></div>
+    </div>
+    <div id="demo"></div>
+</body>
+
+</html>
+<script>
+    var scrollBar = document.getElementById("scrollBar");
+    var bar = scrollBar.children[0];
+    var mask = scrollBar.children[1];
+    var demo = document.getElementById("demo");
+
+    bar.onmousedown = function(event) {
+        var event = event || window.event;
+        var leftVal = event.clientX - this.offsetLeft;
+        // 拖动一定写到 down 里面才可以
+        var barInstance = this;
+        document.onmousemove = function(event) {
+            var event = event || window.event;
+            barInstance.style.left = event.clientX - leftVal + 'px';
+
+            var iMaxLeft = scrollBar.offsetWidth - barInstance.offsetWidth;
+            var val = parseInt(barInstance.style.left);
+            if (val < 0) {
+                barInstance.style.left = 0;
+            } else if (val > iMaxLeft) {
+                barInstance.style.left = iMaxLeft + 'px';
+            }
+            mask.style.width = barInstance.style.left; // 遮罩盒子的宽度
+            //计算百分比
+            demo.innerHTML = "已经走了:" + parseInt(parseInt(barInstance.style.left) / iMaxLeft * 100) + "%";
+            // 假如有文字被选中，move时候也会移动bug，所以取消文字选中. return false就解决
+            // window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+        };
+        document.onmouseup = function() {
+            document.onmousemove = null; // 弹起鼠标不做任何操作
+        };
+
+        return false;
+    };
+</script>

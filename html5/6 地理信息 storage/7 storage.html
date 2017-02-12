@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>同步购物车</title>
+    <script>
+        // 打开两个页面在服务器下测试
+        window.onload = function() {
+            var aInput = document.getElementsByTagName('input');
+
+            for (var i = 0; i < aInput.length; i++) {
+
+                aInput[i].onclick = function() {
+
+                    if (this.checked) {
+                        window.localStorage.setItem('check', this.value);
+                    } else {
+                        window.localStorage.setItem('uncheck', this.value);
+                    }
+
+                };
+
+            }
+
+            window.addEventListener('storage', function(ev) { //当前页面的事件不会触发
+
+                if (ev.key == 'check') {
+
+                    for (var i = 0; i < aInput.length; i++) {
+                        if (ev.newValue == aInput[i].value) {
+                            aInput[i].checked = true;
+                        }
+                    }
+
+                } else if (ev.key == 'uncheck') {
+
+                    for (var i = 0; i < aInput.length; i++) {
+                        if (ev.newValue == aInput[i].value) {
+                            aInput[i].checked = false;
+                        }
+                    }
+
+                }
+
+            }, false);
+
+        };
+    </script>
+</head>
+
+<body>
+    <input type="checkbox" value="香蕉" />香蕉<br />
+    <input type="checkbox" value="苹果" />苹果<br />
+    <input type="checkbox" value="西瓜" />西瓜<br />
+    <input type="checkbox" value="哈密瓜" />哈密瓜<br />
+</body>
+
+</html>

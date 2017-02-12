@@ -1,0 +1,24 @@
+
+body{background:#e8d0ca;}
+#container{position:relative;width:600px;margin:100px auto;border:2px solid #000;}
+
+#list{position:relative;height:310px;margin:0;padding:0;list-style:none;}
+#list li{position:absolute;top:0;width:280px;height:310px;transition:.6s;}
+#list span{display:block;width:100%;height:100%;transition:.6s;}
+#list li:nth-of-type(1){z-index:1;left:0;transform:scale(.8);opacity:.6;background:url(../img/iWorks_1.png) no-repeat;}
+#list li:nth-of-type(1) span{opacity:1;background:url(../img/iWorksBlur_1.png);}
+#list li:nth-of-type(2){z-index:2;left:calc(50% - 140px);opacity:1;background-image:url(../img/iWorks_2.png);}
+#list li:nth-of-type(2) span{opacity:0;background:url(../img/iWorksBlur_2.png);}
+#list li:nth-of-type(3){z-index:1;left:calc(100% - 280px);transform:scale(.8);opacity:.6;background-image:url(../img/iWorks_3.png);}
+#list li:nth-of-type(3) span{opacity:1;background:url(../img/iWorksBlur_3.png);}
+
+.btn{position:absolute;z-index:10;top:130px;width:18px;height:28px;cursor:pointer;}
+.btn span{position:absolute;top:0;left:0;width:100%;height:100%;transition:.5s;background:inherit;}
+.btn:hover span:nth-of-type(1){animation:show 2s infinite;}
+.btn:hover span:nth-of-type(2){animation:show 2s 1s infinite;}
+@keyframes show{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(3);opacity:.1;}
+}
+#prev{left:80px;background:url(../img/iWorksPrev.png) no-repeat;}
+#next{right:80px;background:url(../img/iWorksNext.png) no-repeat;}

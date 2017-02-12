@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>妙味课堂-www.miaov.com</title>
+    <style>
+		body,ul{margin:0;padding:0;}
+		li{ list-style:none;}
+		img{ border:none; vertical-align:top; }
+
+		#box{width:470px;height:150px; position:relative; margin:30px auto; overflow:hidden;}
+		ul{ width:470px; position:absolute;left:0; top:0; z-index:1;}  /*定位*/
+		ul li{width:470px; position:absolute; top:0;}
+    </style>
+    <script type="text/javascript" src="move.js"></script>
+    <script>
+    window.onload = function() {
+        var oUl = document.getElementsByTagName('ul')[0];
+        var aLiUl = oUl.getElementsByTagName('li');
+
+		// 初始化排列后续图片
+        for (var i = 1; i < aLiUl.length; i++) {
+            aLiUl[i].style.left = 470 + (i - 5) * 30 + 'px';  //li宽470，
+        }
+
+        for (var i = 0; i < aLiUl.length; i++) {
+            aLiUl[i].index = i;
+            aLiUl[i].onmouseover = function() {
+
+                for (var i = 0; i < aLiUl.length; i++) {
+                    if (i <= this.index) {   //当前图前面图片向左移动
+                        startMove(aLiUl[i], {
+                            left: i * 30
+                        });
+                    } else {   //当前图后面图片右移动
+                        startMove(aLiUl[i], {
+                            left: 470 + (i - 5) * 30
+                        });
+                    }
+                }
+
+            };
+        }
+
+    };
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <ul>
+            <li><img src="images/1.jpg" alt="" /></li>
+            <li><img src="images/2.jpg" alt="" /></li>
+            <li><img src="images/3.jpg" alt="" /></li>
+            <li><img src="images/4.jpg" alt="" /></li>
+            <li><img src="images/5.jpg" alt="" /></li>
+        </ul>
+    </div>
+</body>
+
+</html>

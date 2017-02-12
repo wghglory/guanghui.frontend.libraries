@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加文本</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.font = '60px impact';
+    context.textAlign = 'left';
+    context.textBaseline = 'top';  //middle bottom
+    context.fillStyle = 'blue';
+    context.fillText('this is the text you will fill', 0, 0);
+
+    context.strokeStyle = 'red';
+    context.strokeText('hello', 0, 200);
+</script>
+</html>

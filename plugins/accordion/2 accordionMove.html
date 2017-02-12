@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>accordion move</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/caret.css">
+    <link rel="stylesheet" href="css/accordionMove.css">
+</head>
+
+<body>
+    <div style="margin: 40px auto;width:1024px;">
+        <dl style="font:24px Arial;margin-bottom:20px;">
+            <dt>change js to see 2 effects:</dt>
+            <dd>1. shrink and open together</dd>
+            <dd>2. open after shrinking finishes</dd>
+        </dl>
+        <section class="accordion">
+            <!-- span must be the first element inside h3 -->
+            <div>
+                <h3>section 1<span class="caret"></span></h3>
+                <div>
+                    <ul>
+                        <li>checking account</li>
+                        <li>saving account</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h3>section 2<span class="caret"></span></h3>
+                <div>
+                    <ul>
+                        <li>loan account</li>
+                        <li>investment account</li>
+                        <li>service account</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h3>section 3<span class="caret"></span></h3>
+                <div><strong style="padding:10px;display:block;">hello this is a good world<br>guanghui is here<br>yuhan is here too<br>love forever</strong></div>
+            </div>
+            <div>
+                <h3>section 4<span class="caret"></span></h3>
+                <div></div>
+            </div>
+        </section>
+    </div>
+    <script src="js/common.js"></script>
+    <script src="js/tweenMove.js"></script>
+    <!-- <script src="js/accordionMove1.js"></script> -->
+    <script src="js/accordionMove2.js"></script>   
+</body>
+
+</html>

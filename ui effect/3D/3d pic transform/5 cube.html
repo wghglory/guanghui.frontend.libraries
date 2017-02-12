@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>cube 2nd method, good to use</title>
+	<style>
+		/*要被变换cube的父级设置persepective*/
+		.container{perspective: 800px;-webkit-perspective: 800px;width: 200px;height: 200px;padding: 200px;border: 1px solid #000;}
+
+		/*被变换对象设置transition and transform-style*/
+		.cube{transition: 2s;transform-style: preserve-3d;-webkit-transform-style: preserve-3d;transform:translateZ(-100px) rotateX(0);-webkit-transform:translateZ(-100px) rotateX(0); width: 200px;height: 200px;position: relative;}
+
+		.cube div{width: 200px;height: 200px;position: absolute;font-size: 100px;font-weight: 800;line-height: 200px;text-align: center;color: #fff;      left: 0;top: 0;   }
+
+		/*.cube div:nth-of-type(1) also works*/
+		/*.cube div:nth-child(1){background: red;top:-200px;left: 0;}   
+		.cube div:nth-child(2){background: blue;top:0;left: -200px;}    
+		.cube div:nth-child(3){background: green;top:0;left: 0;}        
+		.cube div:nth-child(4){background: yellow;top:0;left: 200px;}   
+		.cube div:nth-child(5){background: orange;top:200px;left: 0;}   
+		.cube div:nth-child(6){background: pink;top:0;left: 0;}*/	
+
+		/*1top 2up 3bottom 4down*/
+
+		/*设置每个子元素*/
+		.cube div:nth-child(1){transform:translateZ(100px);-webkit-transform:translateZ(100px); background: green;}
+		.cube div:nth-child(2){transform-origin: top;-webkit-transform-origin:top;transform:translateZ(-100px) rotateX(90deg);-webkit-transform:translateZ(-100px) rotateX(90deg); background: orange;}
+		.cube div:nth-child(3){transform:translateZ(-100px);-webkit-transform:translateZ(-100px); background: blue;}
+		.cube div:nth-child(4){transform-origin: bottom;-webkit-transform-origin:bottom;transform:translateZ(-100px) rotateX(-90deg);-webkit-transform:translateZ(-100px) rotateX(-90deg); background: red;}
+
+		/*hover时设置cube要变换后的状态*/
+		.container:hover .cube{transform:translateZ(-100px) rotateX(360deg);-webkit-transform:translateZ(-100px) rotateX(360deg);}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="cube">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+		</div>
+	</div>
+</body>
+</html>

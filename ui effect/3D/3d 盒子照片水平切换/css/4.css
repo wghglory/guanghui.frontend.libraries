@@ -1,0 +1,38 @@
+body{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
+
+#btns{position:fixed;top:calc(50% - 60px);left:0;height:120px;}
+#btns li{line-height:24px;position:relative;left:-80px;width:100px;height:24px;margin:4px 0;padding-right:10px;transition:.5s;text-align:right;color:#fff;background-color:#f60;}
+#btns li:hover,#btns .active{left:0;}
+#btns .active{background:#9f0;}
+
+.container{width:600px;margin:30px auto 0;perspective:600px;}  /*300刚好站在中心点，600则在2这个面看*/
+#list{position:relative;height:300px;transition:1s;transform-origin:center center 300px;transform-style:preserve-3d;}
+
+/* 1BACK, 2LEFT, 3FRONT, 4RIGHT */
+/* 4在屏幕上，2向我走出来600px */
+
+
+/* 用定位，但不用left top */
+#list li{font:60px/300px Arial;position:absolute;width:600px;height:300px;text-align:center;opacity: 0.1;transition:.6s;}
+#list li:nth-child(4){transform:translateZ(600px) rotateY(90deg);transform-origin:left;background-color:#eea7a7;}
+#list li:nth-child(3){transform:translateZ(600px) rotateY(180deg);background-color:#f7f07c;}
+#list li:nth-child(2){transform:translateZ(600px) rotateY(-90deg);transform-origin:right;background-color:#b562fb;}
+#list li:nth-child(1){background-color:#6cfad0;}
+#list li.active{opacity: 1;}
+
+/* 用定位，用top left */
+/* #list li{font:60px/300px Arial;position:absolute;width:600px;height:300px;text-align:center;}
+#list li:nth-child(4){left:-100%;transform:rotateY(90deg);transform-origin:right;background-color:#eea7a7;}
+#list li:nth-child(3){transform:translateZ(600px) rotateY(180deg);background-color:#f7f07c;}
+#list li:nth-child(2){left:100%;transform:rotateY(-90deg);transform-origin:left;background-color:#b562fb;}
+#list li:nth-child(1){background-color:#6cfad0;}
+.container:hover #list{transform:rotateY(360deg);} */
+
+/* 不用定位 */
+/* #list li{font:60px/300px Arial;width:600px;height:300px;text-align:center;}
+#list li:nth-child(4){transform:translateZ(600px) rotateY(90deg);transform-origin:left;background-color:#eea7a7;}
+#list li:nth-child(3){background-color:#f7f07c;transform:translateY(-300px) translateZ(600px) rotateY(180deg);}
+#list li:nth-child(2){transform:translateZ(600px) translateY(-600px) rotateY(-90deg);transform-origin:right;background-color:#b562fb;}
+#list li:nth-child(1){transform:translateY(-900px);background-color:#6cfad0;}
+.container:hover #list{transform:rotateY(360deg);} */

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    var image = new Image();
+    image.onload = function() {
+        draw(this);
+    };
+    image.src = 'images/canvas26.png';
+
+    function draw(obj) {
+        canvas.width = obj.width;
+        context.drawImage(obj, 0, 0);
+
+        //反色开始
+        var img = context.getImageData(0, 0, obj.width, obj.height);
+        var w = img.width;
+        var h = img.height;
+
+        //针对每个像素循环
+        for (var i = 0; i < h; i++) {
+            for (var j = 0; j < w; j++) {
+                var result = [];
+                var color = getColorByXY(img, j, i);
+                result[0] = 255 - color[0];
+                result[1] = 255 - color[1];
+                result[2] = 255 - color[2];
+                result[3] = 255;
+
+                setColorByXY(img, j, i, result);
+            }
+        }
+
+        context.putImageData(img, 0, obj.height);
+        //反色结束
+    }
+
+    function getColorByXY(obj, x, y) {
+
+        var w = obj.width;
+        var h = obj.height;
+        var d = obj.data;
+        var color = [];
+        color[0] = d[4 * (y * w + x)];
+        color[1] = d[4 * (y * w + x) + 1];
+        color[2] = d[4 * (y * w + x) + 2];
+        color[3] = d[4 * (y * w + x) + 3];
+
+        return color;
+    }
+
+    function setColorByXY(obj, x, y, color) {
+        var w = obj.width;
+        var h = obj.height;
+        var d = obj.data;
+
+        d[4 * (y * w + x)] = color[0];
+        d[4 * (y * w + x) + 1] = color[1];
+        d[4 * (y * w + x) + 2] = color[2];
+        d[4 * (y * w + x) + 3] = color[3];
+    }
+</script>
+
+</html>

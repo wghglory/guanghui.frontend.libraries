@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <style>
+    #img1 {
+        position: absolute;
+    }
+    
+    .box {
+        border: 1px #000 solid;
+        position: absolute;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        var oImg = document.getElementById('img1');
+
+        var disX = 0;
+        var disY = 0;
+
+        oImg.onmousedown = function(ev) {
+            var ev = ev || window.event;
+            disX = ev.clientX - oImg.offsetLeft;
+            disY = ev.clientY - oImg.offsetTop;
+
+            document.onmousemove = function(ev) {
+                var ev = ev || window.event;
+                oImg.style.left = ev.clientX - disX + 'px';
+                oImg.style.top = ev.clientY - disY + 'px';
+
+                var oBox = document.createElement('div');
+                oBox.className = 'box';
+                oBox.style.left = ev.clientX + 'px';
+                oBox.style.top = ev.clientY + 'px';
+                document.body.appendChild(oBox);
+
+            };
+
+            document.onmouseup = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+
+            return false;
+
+        };
+
+
+
+    };
+    </script>
+</head>
+
+<body>
+    <img src="1.jpg" id="img1" />
+</body>
+
+</html>

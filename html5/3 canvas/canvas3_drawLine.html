@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw a line</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" width="400" height="400">your browser doesn't support canvas</canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.lineWidth = 20;
+    context.lineCap = 'round'; //square
+    context.moveTo(100, 100);
+    context.lineTo(200, 200);
+    context.stroke();
+
+</script>
+</html>

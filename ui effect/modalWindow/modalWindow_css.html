@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>modal window</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            /*opacity: 0.3;
+            filter: alpha(opacity=30);
+            background: #000;*/
+            background: rgba(0, 0, 0, .5);
+            display: none;
+        }
+
+        .modal {
+            width: 400px;
+            height: 200px;
+            background: #fff;
+            position: fixed;
+            z-index: 1000;
+            /*top: 50%;
+            left: 50%;
+            margin-top: -102px;
+            margin-left: -202px;*/
+            top: calc(50% - 102px);
+            left: calc(50% - 202px);
+            display: none;
+        }
+        /*标准 不透明度 opacity:0~1;
+        IE私有 filter:alpha(opacity=0~100);*/
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 15px;
+            height: 15px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body style="height:2000px;">
+    <a href="#" id="login">注册</a>
+    <div>
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+        <br/> 内容内容内容内容内容内容内容内容内容内容内容
+    </div>
+    <div class="mask"></div>
+    <div class="modal">
+        <span class="close">×</span>
+    </div>
+    <script>
+        var login = document.getElementById('login');
+        var mask = document.querySelector('.mask');
+        var modal = document.getElementsByClassName('modal')[0];
+        var close = document.querySelector('.close');
+
+        login.onclick = function(event) {
+            mask.style.display = 'block';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // 不显示滚动条
+
+            /*//取消冒泡, 用过这个更好感觉。
+            var event = event || window.event;
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }*/
+        };
+        stopPropagation(login);
+
+        // click mask hides the modal
+        document.onclick = function(event) {
+            var event = event || window.event;
+
+            // // they should be the mask or modal
+            // console.log(event.target);
+            // console.log(event.srcElement);
+            var targetClassName = event.target ? event.target.className : event.srcElement.className;
+
+            // note: close click also triggers here, because its targetClassName is close
+            if (targetClassName != 'modal') { // 如果点击了mask而不是modal，隐藏modal
+                console.log(targetClassName);
+                mask.style.display = 'none';
+                modal.style.display = 'none';
+                document.body.style.overflow = 'visible'; // 显示滚动条
+            }
+        };
+        close.onclick = function() {
+            mask.style.display = 'none';
+            modal.style.display = 'none';
+            document.body.style.overflow = 'visible'; // 显示滚动条
+        }
+
+        // from event.js:
+        function bind(obj, ev, fn) { //事件绑定
+            if (obj.addEventListener) {
+                obj.addEventListener(ev, fn, false);
+            } else {
+                obj.attachEvent('on' + ev, function() {
+                    fn.call(obj);
+                });
+            }
+        }
+
+        /**
+         * stop Propagation
+         * @param  {[node]} obj
+         * usage：
+         *     document.onclick = function() {
+                    alert("点击了空白处");
+                };
+                btn.onclick = function(event) {
+                    alert("点击了按钮");
+                    // var event = event || window.event;
+                    // if (event && event.stopPropagation) {
+                    //     event.stopPropagation(); //  w3c 标准
+                    // } else {
+                    //     event.cancelBubble = true; // ie 678  ie浏览器
+                    // }
+                };
+                stopPropagation(btn);
+         */
+        function stopPropagation(obj) { //阻止点击事件冒泡
+            bind(obj, 'touchstart', function(ev) {
+                var e = ev || event;
+                //IE678用cancelBubble=true来阻止而FF下需要用stopPropagation方法
+                e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+            });
+            bind(obj, 'click', function(ev) {
+                var e = ev || event;
+                //IE678用cancelBubble=true来阻止而FF下需要用stopPropagation方法
+                e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+            });
+        }
+    </script>
+</body>
+
+</html>

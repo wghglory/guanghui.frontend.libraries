@@ -1,0 +1,92 @@
+body
+{
+    background: #e8d0ca;
+}
+.container
+{
+    position: relative;
+
+    width: 710px;
+    height: 390px;
+    margin: 100px auto 0;
+}
+
+ul,
+li
+{
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+#list
+{
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+}
+
+#list li
+{
+    position: absolute;
+    left: 0;
+
+    width: 690px;
+    height: 370px;
+
+    transition: 1s;
+
+    border: 10px solid #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,.5),inset 0 0 5px rgba(0,0,0,1);
+}
+
+.btn
+{
+    position: absolute;
+    z-index: 5;
+    top: 150px;
+
+    width: 40px;
+    height: 42px;
+
+    transition: .5s opacity;
+
+    opacity: 0;
+    border-radius: 5px;
+    background: url(../img/btn.png) no-repeat #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+}
+
+/* 不加~不好使
+#list:hover ~ .btn
+{
+    opacity: 1;
+} */
+.container:hover .btn
+{
+    opacity: 1;
+}
+
+.prev
+{
+    left: -20px;
+
+    background-position: left bottom;
+}
+.prev:hover
+{
+    background-position: left top;
+}
+.next
+{
+    right: -20px;
+
+    background-position: right bottom;
+}
+.next:hover
+{
+    background-position: right top;
+}

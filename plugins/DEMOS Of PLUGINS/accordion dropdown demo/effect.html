@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>accordion dropdown no effect</title>
+      <link href="css/reset.css" rel="stylesheet">
+      <link href="css/dropdown.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/accordionTabMove.css">
+      <link href="css/site.css" rel="stylesheet">
+   </head>
+   <body>
+      <div class="container clear">
+         <p class="warning panel">Real time data is not available for this account. Valid as of: 4/28/2016</p>
+         <section class="filters fl">
+            <p>Filters</p>
+            <aside class="accordion">
+               <div>
+                  <h3><span class="caret"></span><span class="money">$8,209</span></h3>
+                  <div>
+                     <ul class="deposit">
+                        <li class="accountDetail">Deposit Account</li>
+                        <li class="otherInfo">Other Information</li>
+                        <li class="">Future</li>
+                     </ul>
+                  </div>
+               </div>
+               <div>
+                  <h3><span class="caret"></span><span class="money">$18,209</span></h3>
+                  <div>
+                     <ul class="loan">
+                        <li class="accountDetail">Loan Detail</li>
+                        <li class="otherInfo">Other Information</li>
+                     </ul>
+                  </div>
+               </div>
+               <div>
+                  <h3><span class="caret"></span></h3>
+                  <div></div>
+               </div>
+            </aside>
+         </section>
+         <section class="rightSection fl">
+            <section class="content">
+               <div class="depositAccount">
+                  <div class="account panel">
+                     <h2>Account Detail</h2>
+                     <ul>
+                        <li><span><label>Account Number:</label>0041621616</span><span><label>Opened Date:</label>5/22/1989</span></li>
+                        <li><span><label>Status:</label>Open</span><span><label>Product:</label>Ub Essentials Checking</span></li>
+                        <li><span><label>Address:</label></span><span><label>Reason Acct Opened:</label>00000</span></li>
+                        <li><span><label>Branch:</label>00000 - North Park</span><span><label>Org Unit:</label>Retail Banking</span></li>
+                     </ul>
+                  </div>
+                  <div class="balance panel">
+                     <h2>Balance(s)</h2>
+                     <ul>
+                        <li><span><label>Ledger: </label>$1,000</span><span><label>Available: </label>$1,000</span></li>
+                        <li><span><label>1 Mo Avg: </label>$1,000</span><span><label>3 Mo Avg: </label>$1,000</span></li>
+                        <li><span><label>6 Mo Avg: </label>$1,000</span><span><label>12 Mo Avg: </label>$1,000</span></li>
+                     </ul>
+                  </div>
+                  <div class="transaction panel">
+                     <h2>Transactions</h2>
+                     <div class="filter">
+                        <label>Transactions:</label>
+                        <div class="dropdown inline">
+                           <button class="btn" type="button">
+                           Current Week
+                           <span class="caret"></span>
+                           </button>
+                           <ul class="dropdown-menu">
+                              <li><a href="#">1 Month</a></li>
+                              <li><a href="#">3 Month</a></li>
+                              <li><a href="#">6 Month</a></li>
+                              <li><a href="#">12 Month</a></li>
+                           </ul>
+                        </div>
+                        <label>Filters:</label>
+                        <div class="dropdown inline">
+                           <button class="btn" type="button">
+                           All transactions
+                           <span class="caret"></span>
+                           </button>
+                           <ul class="dropdown-menu">
+                              <li><a href="#">Fees</a></li>
+                              <li><a href="#">Fees Adjustment</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="tableWrap">
+                        <table id="transactionTable">
+                           <thead>
+                              <tr>
+                                 <th>Date</th>
+                                 <th>Amount</th>
+                                 <th></th>
+                                 <th>Reference Code</th>
+                                 <th>Transaction Code</th>
+                                 <th>Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>4/27/2016</td>
+                                 <td>$1,476.00</td>
+                                 <td>CR</td>
+                                 <td>50957450</td>
+                                 <td>590 - ELECTRONIC</td>
+                                 <td>SSA TREAS 310 XXSOC SEC PPD ***********ASSA SSA TREAS 310 XXSOC SEC PPD ***********ASSA</td>
+                              </tr>
+                              <tr>
+                                 <td>4/27/2016</td>
+                                 <td>$1,476.00</td>
+                                 <td>CR</td>
+                                 <td>50957450</td>
+                                 <td>590 - ELECTRONIC</td>
+                                 <td>SSA TREAS 310 XXSOC SEC PPD ***********ASSA</td>
+                              </tr>
+                              <tr>
+                                 <td>4/27/2016</td>
+                                 <td>$1,476.00</td>
+                                 <td>CR</td>
+                                 <td>50957450</td>
+                                 <td>590 - ELECTRONIC</td>
+                                 <td>SSA TREAS 310 XXSOC SEC PPD ***********ASSA</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="depositOther">
+                  <div class="clear panel" style="margin-bottom:20px;">
+                     <h2>Other Information</h2>
+                     <ul class="otherInfo-top">
+                        <li><span><label>Last Service Chg:</label>$0.00</span><span><label>Last Withdrawal Date:</label>5/22/1989</span></li>
+                        <li><span><label>Last Direct Deposit Date:</label>5/22/1989</span><span><label>Last Deposit Date:</label>5/22/1989</span></li>
+                        <li><span><label>Bank by Mail:</label><input type="checkbox" disabled="true"></span><span><label>Bank by Phone:</label><input type="checkbox" disabled="true" checked="true"></span></li>
+                        <li><span><label>Cash Reserve:</label><input type="checkbox" disabled="true"></span><span><label></label></span></li>
+                     </ul>
+                     <p class="monthToDate">Month-to-Date:</p>
+                     <ul class="otherInfo-bottom clear">
+                        <li><span><label>Credits Count:</label>2</span></li>
+                        <li><span><label>Credits Amount:</label>$1,989.71</span></li>
+                        <li><span><label>NSF Return Days:</label>5</span></li>
+                        <li><span><label>Debits Count:</label>50</span></li>
+                        <li><span><label>Debits Amount:</label>$1,989.71</span></li>
+                        <li><span><label>Days OD:</label>5</span></li>
+                     </ul>
+                  </div>
+                  <div class="clear" style="margin-bottom:20px;">
+                     <div class="customerRel panel fl">
+                        <h2>Customer Relationship</h2>
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th>Customer Name</th>
+                                 <th>Relationship</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>Harkin Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                              <tr>
+                                 <td>Harkin Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                              <tr>
+                                 <td>Harkin Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                              <tr>
+                                 <td>Harkin Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <div class="hold panel fr">
+                        <h2>Holds</h2>
+                        <textarea disabled cols="30" rows="10">No holds</textarea>
+                     </div>
+                  </div>
+               </div>
+               <div class="depositFuture">
+                  something will be added in future...
+               </div>
+               <div class="loanAccount">
+                  <div class="account panel">
+                     <h2>Account Detail</h2>
+                     <ul>
+                        <li><span><label>Account Number:</label>87093824</span><span><label>Opened Date:</label>6/3/1995</span></li>
+                        <li><span><label>Status:</label>Closed</span><span><label>Product:</label>Ub Essentials Savings</span></li>
+                        <li><span><label>Address:</label>9275 sky ct</span><span><label>Reason Acct Opened:</label>11111</span></li>
+                        <li><span><label>Branch:</label>00000 - South Park</span><span><label>Org Unit:</label>Retail Banking</span></li>
+                     </ul>
+                  </div>
+                  <div class="balance panel">
+                     <h2>Balance(s)</h2>
+                     <ul>
+                        <li><span><label>Ledger: </label>$2,000</span><span><label>Available: </label>$12,000</span></li>
+                        <li><span><label>1 Mo Avg: </label>$3,000</span><span><label>3 Mo Avg: </label>$31,000</span></li>
+                        <li><span><label>6 Mo Avg: </label>$4,000</span><span><label>12 Mo Avg: </label>$51,000</span></li>
+                     </ul>
+                  </div>
+                  <div class="transaction panel">
+                     <h2>Transactions</h2>
+                     <div class="filter">
+                        <label>Transactions:</label>
+                        <div class="dropdown inline">
+                           <button class="btn" type="button">
+                           Current Week
+                           <span class="caret"></span>
+                           </button>
+                           <ul class="dropdown-menu">
+                              <li><a href="#">1 Month</a></li>
+                              <li><a href="#">3 Month</a></li>
+                              <li><a href="#">6 Month</a></li>
+                              <li><a href="#">12 Month</a></li>
+                           </ul>
+                        </div>
+                        <label>Filters:</label>
+                        <div class="dropdown inline">
+                           <button class="btn" type="button">
+                           All transactions
+                           <span class="caret"></span>
+                           </button>
+                           <ul class="dropdown-menu">
+                              <li><a href="#">Fees</a></li>
+                              <li><a href="#">Fees Adjustment</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="tableWrap">
+                        <table id="transactionTable">
+                           <thead>
+                              <tr>
+                                 <th>Date</th>
+                                 <th>Amount</th>
+                                 <th>Rate (%)</th>
+                                 <th>Code</th>
+                                 <th>Transaction Code</th>
+                                 <th>Description</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>2/17/2014</td>
+                                 <td>$476.00</td>
+                                 <td>5</td>
+                                 <td>343434</td>
+                                 <td>123 - ELECTRONIC</td>
+                                 <td>test description union bank union bank</td>
+                              </tr>
+                              <tr>
+                                 <td>2/17/2014</td>
+                                 <td>$476.00</td>
+                                 <td>6</td>
+                                 <td>343434</td>
+                                 <td>123 - ELECTRONIC</td>
+                                 <td>test description union bank union bank</td>
+                              </tr>
+                              <tr>
+                                 <td>2/17/2014</td>
+                                 <td>$476.00</td>
+                                 <td>8</td>
+                                 <td>343434</td>
+                                 <td>123 - ELECTRONIC</td>
+                                 <td>test description union bank union bank</td>
+                              </tr>
+                              <tr>
+                                 <td>2/17/2014</td>
+                                 <td>$476.00</td>
+                                 <td>10</td>
+                                 <td>343434</td>
+                                 <td>123 - ELECTRONIC</td>
+                                 <td>test description union bank union bank</td>
+                              </tr>
+                              <tr>
+                                 <td>2/17/2014</td>
+                                 <td>$476.00</td>
+                                 <td>15</td>
+                                 <td>343434</td>
+                                 <td>123 - ELECTRONIC</td>
+                                 <td>test description union bank union bank</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="loanOther">
+                  <div class="clear panel" style="margin-bottom:20px;">
+                     <h2>Other Information</h2>
+                     <ul class="otherInfo-top">
+                        <li><span><label>Last Service Chg:</label>$200.00</span><span><label>Last Withdrawal Date:</label>2/28/1969</span></li>
+                        <li><span><label>Last Direct Deposit Date:</label>5/12/1959</span><span><label>Last Deposit Date:</label>3/22/1999</span></li>
+                        <li><span><label>Bank by Mail:</label><input type="checkbox" disabled="true"></span><span><label>Bank by Phone:</label><input type="checkbox" disabled="true" checked="true"></span></li>
+                        <li><span><label>Cash Reserve:</label><input type="checkbox" checked="true" disabled="true"></span><span><label></label></span></li>
+                     </ul>
+                     <p class="monthToDate">Month-to-Date:</p>
+                     <ul class="otherInfo-bottom clear">
+                        <li><span><label>Credits Count:</label>44</span></li>
+                        <li><span><label>Credits Amount:</label>$21,989.71</span></li>
+                        <li><span><label>NSF Return Days:</label>56</span></li>
+                        <li><span><label>Debits Count:</label>30</span></li>
+                        <li><span><label>Debits Amount:</label>$61,989.71</span></li>
+                        <li><span><label>Days OD:</label>2</span></li>
+                     </ul>
+                  </div>
+                  <div class="clear" style="margin-bottom:20px;">
+                     <div class="customerRel panel fl">
+                        <h2>Customer Relationship</h2>
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th>Customer Name</th>
+                                 <th>Relationship</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td>Mike Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                              <tr>
+                                 <td>David Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                              <tr>
+                                 <td>Harkin Willams</td>
+                                 <td>Trustee</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <div class="hold panel fr">
+                        <h2>Holds</h2>
+                        <textarea disabled cols="30" rows="10">Holds 891891</textarea>
+                     </div>
+                  </div>
+               </div>
+            </section>
+         </section>
+      </div>
+      <script src="js/common.js"></script>
+      <script src="js/tweenMove.js"></script>
+      <script src="js/dropdown.js"></script>
+      <script src="js/accordionTabMove1.js"></script>
+      <script>
+         //default click first li of first header
+         var firstHeader = document.querySelector('.accordion h3');
+         var firstLi = firstHeader.nextElementSibling.querySelector('li');
+
+         firstHeader.onclick();
+         firstLi.onclick();
+      </script>
+   </body>
+</html>

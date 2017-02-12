@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>transform rotateX</title>
+	<style>
+		.container{width: 100px;height: 100px;border:2px solid #000;padding: 150px;perspective: 800px;-webkit-perspective: 800px;}
+		.container div{height: 100px;background: red;transition: 1s;transform-style: preserve-3d;-webkit-transform-style: preserve-3d;}
+		.container:hover div{background-color: blue; -webkit-transform:rotateX(50deg) rotateY(50deg) translateZ(-100px);transform: rotateX(50deg) rotateY(50deg) translateZ(-100px);}
+	</style>
+</head>
+<body>
+	<p>add perspective:800px to the parent of element that needs transform.</p>
+	<p>add transform-style: preserve-3d and transition time to element</p>
+	<div class="container">
+		<div></div>
+	</div>
+</body>
+</html>

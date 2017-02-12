@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="http://google.com">
+		<input type="number" step="2" min="0" max="10" id="money" />
+		<input type="text" placeholder="please input" autocomplete="on">
+		<input type="password" name="pwd" autofocus required pattern="\d{1,5}">
+		<input type="submit" value="submit">
+		<input type="submit" value="to other web" formaction="http://www.qq.com" formnovalidate>
+	</form>
+
+	<input type="email">
+	<input type="tel">
+	<input type="color">
+	<input type="datetime">
+	<input type="datetime-local">
+	<input type="time">
+	<input type="date">
+	<input type="week">
+	<input type="month">
+	<input type="url">
+	<input type="search">
+	<input type="range" step="2" min="0" max="10" value="2">
+	<script>
+		var money = document.getElementById('money');
+		money.onchange = function() {
+			document.title = this.value;
+		};
+	</script>
+</body>
+</html>

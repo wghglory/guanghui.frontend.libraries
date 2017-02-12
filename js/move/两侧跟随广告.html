@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #ad {
+            position: absolute;
+            left: 0;
+            top: 50px;
+            background-color: green;
+            width: 100px;
+            height: 400px;
+        }
+
+        #demo {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <aside id="ad"></aside>
+    <div id="demo">
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+        <p>天王盖地虎，小鸡炖蘑菇</p>
+    </div>
+    <script>
+        var ad = document.getElementById('ad');
+        var leader = 0;
+        var target = 0;
+        var timer = null;
+        var t = ad.offsetTop; // 50, initial top
+        window.onscroll = function() {
+            clearInterval(timer);
+
+            target = scroll().scrollTop + t; // 把最新的 scrolltop 给  target
+            timer = setInterval(function() {
+                leader = leader + (target - leader) / 10;
+                ad.style.top = leader + 'px';
+            }, 30);
+        };
+
+        // $(function() {
+        //     $(window).scroll(function() {
+        //         var scrollTop = $(document).scrollTop();
+
+        //         $("#ad").stop().animate({
+        //             "top": scrollTop + 50
+        //         }, 600);
+        //     });
+        // });
+
+        function scroll() {
+            // if (window.pageYOffset) //  ie9+ 和其他浏览器
+            // {
+            //     return {
+            //         scrollLeft: window.pageXOffset,
+            //         scrollTop: window.pageYOffset
+            //     };
+            // } else if (document.compatMode == "CSS1Compat") // 声明的了 DTD
+            // // 检测是不是怪异模式的浏览器 -- 就是没有 声明<!DOCTYPE html>
+            // {
+            //     return {
+            //         scrollLeft: document.documentElement.scrollLeft,
+            //         scrollTop: document.documentElement.scrollTop
+            //     };
+            // }
+            // return { //  剩下的肯定是怪异模式的
+            //     scrollLeft: document.body.scrollLeft,
+            //     scrollTop: document.body.scrollTop
+            // };
+
+            return {
+                scrollTop: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+                scrollLeft: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
+            };
+        }
+    </script>
+</body>
+
+</html>

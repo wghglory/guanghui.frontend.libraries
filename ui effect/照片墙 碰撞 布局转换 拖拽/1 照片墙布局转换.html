@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>布局转换</title>
+<style>
+*{ margin:0; padding:0;}
+#container{ width:660px; position:relative; margin:10px auto;}
+li{ width:200px; height:150px; margin:10px; float:left; list-style:none;}
+</style>
+<script>
+window.onload = function(){
+	var aLi = document.getElementsByTagName('li');
+	var izIndex = 2;
+	var arr = [];
+	
+	//store left and top for each image
+	for(var i=0;i<aLi.length;i++){
+		arr.push( [ aLi[i].offsetLeft , aLi[i].offsetTop ] );
+	}
+	
+	//change layout to position
+	for(var i=0;i<aLi.length;i++){
+		aLi[i].style.position = 'absolute';
+		aLi[i].style.left = arr[i][0] + 'px';
+		aLi[i].style.top = arr[i][1] + 'px';
+		aLi[i].style.margin = 0;   //cancel the margin!!! this margin is used in float layout.
+	}
+	
+	for(var i=0;i<aLi.length;i++){
+		drag(aLi[i]);
+	}
+	
+	function drag(obj){
+		var disX = 0;
+		var disY = 0;
+		obj.onmousedown = function(ev){
+			
+			obj.style.zIndex = izIndex++;  //使得当前拖拽的图片层级最高
+			
+			var ev = ev || window.event;
+			disX = ev.clientX - obj.offsetLeft;
+			disY = ev.clientY - obj.offsetTop;
+			
+			document.onmousemove = function(ev){
+				var ev = ev || window.event;
+				obj.style.left = ev.clientX - disX + 'px';
+				obj.style.top = ev.clientY - disY + 'px';
+			};
+			
+			document.onmouseup = function(){
+				document.onmousemove = null;
+				document.onmouseup = null;
+			};
+			
+			return false;
+			
+		};
+	}
+	
+};
+</script>
+</head>
+
+<body>
+<ul id="container">
+	<li><img src="photo/1.jpg" /></li>
+    <li><img src="photo/2.jpg" /></li>
+    <li><img src="photo/3.jpg" /></li>
+    <li><img src="photo/4.jpg" /></li>
+    <li><img src="photo/5.jpg" /></li>
+    <li><img src="photo/1.jpg" /></li>
+    <li><img src="photo/2.jpg" /></li>
+    <li><img src="photo/3.jpg" /></li>
+    <li><img src="photo/4.jpg" /></li>
+</ul>
+</body>
+</html>

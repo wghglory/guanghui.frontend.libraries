@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直接创建</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            color: white;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<p>click left li</p>
+<canvas id="c1" width="400" height="400"></canvas>
+<ul style="float:left;">
+    <li>M</li>
+    <li>A</li>
+    <li>R</li>
+    <li>K</li>
+</ul>
+</body>
+<script>
+
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    var li = document.getElementsByTagName('li');
+    for (var i = 0; i < li.length; i++) {
+        li[i].onclick = function () {
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            var text = this.innerHTML;
+
+            var height = 180;
+            context.font = height + 'px impact';
+            context.textBaseline = 'top';  //middle bottom
+            context.fillStyle = 'blue';
+
+            var width = context.measureText(text).width;
+
+            var x = (canvas.width - width) / 2;
+            var y = (canvas.height - height) / 2;
+
+            //center display
+            context.fillText(text, x, y);   //height is font size.
+
+            var img = context.getImageData(x, y, width, height);
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            var newImg = context.createImageData(width, height);
+
+            var arr = randomArr(width * height, width * height / 10);
+
+            for (var i = 0; i < arr.length; i++) {
+                newImg.data[4 * arr[i]] = img.data[4 * arr[i]];
+                newImg.data[4 * arr[i] + 1] = img.data[4 * arr[i] + 1];
+                newImg.data[4 * arr[i] + 2] = img.data[4 * arr[i] + 2];
+                newImg.data[4 * arr[i] + 3] = img.data[4 * arr[i] + 3];
+            }
+
+            context.putImageData(newImg, x, y);
+        };
+    }
+
+    function randomArr(all, count) {
+        var arr = [];
+        var newArr = [];
+        for (var i = 0; i < all; i++) {
+            arr.push(i);
+        }
+
+        for (var i = 0; i < count; i++) {
+            //随机找一个位置,删除一个元素,splice返回就是刚才删除的元素. splice会改变原来数组.
+            newArr.push(arr.splice(Math.floor(Math.random() * arr.length), 1));
+        }
+
+        return newArr;
+    }
+
+</script>
+</html>

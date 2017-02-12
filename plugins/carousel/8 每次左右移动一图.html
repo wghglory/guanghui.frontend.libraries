@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>妙味课堂-www.miaov.com</title>
+    <style>
+		body,ul,ol{margin:0;padding:0;}
+		li{ list-style:none;}
+		img{ border:none; vertical-align:top; }
+
+		#box{width:470px;height:150px; position:relative; margin:30px auto; overflow:-hidden;}
+		ul{ width:470px; position:absolute;left:0; top:0; z-index:1;}
+		ul li{width:470px; position:absolute; top:0;}   /*这里改成定位了*/
+		ol{z-index:2; width:120px; position:absolute;right:10px; bottom:10px;}
+		ol li{ width:20px;height:20px; float:left;margin:0 2px; background:#fff; color:#f60; line-height:20px; text-align:center;}
+		ol .active{ background:#f60; color:#fff;}
+    </style>
+    <script src="move.js"></script>
+    <script>
+
+	// 每次只移动一张图片。ul左，ul，ul右 三部分
+
+    window.onload = function() {
+        var oUl = document.getElementsByTagName('ul')[0];
+        var aLiUl = oUl.getElementsByTagName('li');
+
+        var oOl = document.getElementsByTagName('ol')[0];
+        var aLiOl = oOl.getElementsByTagName('li');
+
+        var oneWidth = aLiUl[0].offsetWidth;
+        var iNow = 0;
+        var bBtn = true;
+
+		// 初始化把第二张图片和以后图定位到ul右侧
+        for (var i = 1; i < aLiUl.length; i++) {
+            aLiUl[i].style.left = oneWidth + 'px';
+        }
+
+
+        for (var i = 0; i < aLiOl.length; i++) {
+            aLiOl[i].index = i;
+            aLiOl[i].onmouseover = function() {
+
+                if (bBtn) {   //防止快速划过好多li，只有当前运动结束才能触发
+                    bBtn = false;
+                    for (var i = 0; i < aLiOl.length; i++) {
+                        aLiOl[i].className = '';
+                    }
+                    this.className = 'active';
+
+                    if (iNow < this.index) {   //之前图片的索引inow
+                        aLiUl[this.index].style.left = oneWidth + 'px';  //设置当前图片位置，下面让他运动到中心位置
+                        startMove(aLiUl[iNow], {    //移动之前的图片
+                            left: -oneWidth
+                        });
+                    } else if (iNow > this.index) {
+                        aLiUl[this.index].style.left = -oneWidth + 'px';   //设置当前图片位置，下面让他运动到中心位置
+                        startMove(aLiUl[iNow], { 	//移动之前的图片
+                            left: oneWidth
+                        });
+                    }
+
+                    startMove(aLiUl[this.index], {   //移动当前图片到中心位置。
+                        left: 0
+                    }, function() {
+                        bBtn = true;
+
+                    });
+                    iNow = this.index;  //记录本次图片索引，以便和下一次比较
+
+                }
+
+            };
+        }
+
+
+    };
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <ul>
+            <li><img src="images/1.jpg" alt="" /></li>
+            <li><img src="images/2.jpg" alt="" /></li>
+            <li><img src="images/3.jpg" alt="" /></li>
+            <li><img src="images/4.jpg" alt="" /></li>
+            <li><img src="images/5.jpg" alt="" /></li>
+        </ul>
+        <ol>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+    </div>
+</body>
+
+</html>

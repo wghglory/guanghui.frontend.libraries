@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>layout</title>
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+
+<body>
+    <p>优化点：可以快速点击btn，即使btn透明度还没回到1情况下。解决：定义变量liMoving=false;在li运动过程liMoving=true,在btn click中检测if(liMoving==true) return false;</p>
+    <section class="container">
+        <ul id="list">
+<!--             <li style="background-image:url(img/1.jpeg);transform: rotate(12deg);z-index:4;"></li>
+            <li style="background-image:url(img/2.jpeg);transform: rotate(-5deg);z-index:3;"></li>
+            <li style="background-image:url(img/3.jpeg);transform: rotate(4deg);z-index:2;"></li>
+            <li style="background-image:url(img/4.jpeg);transform: rotate(-9deg);z-index:1;"></li> -->
+        </ul>
+        <a href="#" class="btn prev"></a>
+        <a href="#" class="btn next"></a>
+    </section>
+    <script src="js/2.js"></script>
+</body>
+
+</html>

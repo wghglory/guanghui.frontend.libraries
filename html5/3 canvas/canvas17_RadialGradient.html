@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放射性渐变</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    var obj = context.createRadialGradient(200, 200, 100, 200, 200, 150);
+    obj.addColorStop(0, 'red');
+    obj.addColorStop(0.5, 'yellow');
+    obj.addColorStop(1, 'blue');
+
+    context.fillStyle = obj;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+</script>
+</html>

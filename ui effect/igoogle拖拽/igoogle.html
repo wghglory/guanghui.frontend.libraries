@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>拖拽互换</title>
+      <style>
+      *{ margin:0; padding:0;}
+
+      #container{ width:900px; height:auto; margin:10px auto;}
+      #leftSection{ width:20%; min-height:30px; float:left; margin-right:5px;}
+      #centerSection{ width:48%; min-height:30px; float:left; margin-right:5px;}
+      #rightSection{ width:30%; min-height:30px; float:left;}
+
+      .panel{ width:100%; background:#337ab7; color:#FFFFFF; margin-bottom:10px; border:1px solid #000;}
+      .title{ width:100%; height:30px; background:#dff0d8; cursor:move; line-height:30px;color:#000;}
+      .temp{ width:100%; height:30px; margin-bottom:10px; border:1px #666666 dashed;}
+
+      .clear{zoom:1;}
+      .clear:after{content:""; display:block;clear:both;}
+      </style>
+      <script>
+      
+      //chrome 必须在服务器环境下运行才有cookie
+      
+          window.onload = function() {
+              var container = document.getElementById('container');
+              var titles = container.getElementsByClassName('title');
+
+              for (var i = 0; i < titles.length; i++) { //can drag title in any panel
+                  titles[i].index = i;
+                  drag(titles[i]);
+              }
+
+              //loop 3 divs, left center right
+              //这三个div存储之前移动过panel id. 把历史纪录情况显示出来
+              for (var i = 0; i < container.children.length; i++) {
+                  if (getCookie(container.children[i].id) != '') {
+                      var arrs = getCookie(container.children[i].id).split(',').map(function(item) {
+                          return parseInt(item, 10);
+                      });
+                      console.log(arrs);
+                      for (var j = 0; j < arrs.length; j++) {
+                          container.children[i].appendChild(titles[arrs[j]].parentNode);
+                      }
+                  }
+              }
+
+              function drag(obj) {
+                  var disX = 0;
+                  var disY = 0;
+                  obj.onmousedown = function(ev) {
+                      var ev = ev || window.event; //obj是panel下的title
+                      var panel = obj.parentNode; //parent是拖拽的panel
+                      var columnSection = obj.parentNode.parentNode; //拖拽的列。可能是left,center,right
+                      disX = ev.clientX - obj.offsetLeft;
+                      disY = ev.clientY - obj.offsetTop;
+
+                      //create temporary div, which is under current clicked title
+                      var tempDiv = document.createElement('div');
+                      tempDiv.className = 'temp';
+                      columnSection.insertBefore(tempDiv, panel); //temp插到panel之前
+
+                      //鼠标按下保存当前panel的信息. panel脱离该列div
+                      panel.style.position = 'absolute';
+                      panel.style.left = obj.offsetLeft + 'px';
+                      panel.style.top = obj.offsetTop + 'px';
+                      panel.style.width = columnSection.offsetWidth + 'px';
+                      panel.style.height = '30px'; //设置高度和title高度一致
+                      panel.style.overflow = 'hidden'; //隐藏了panel下内容
+
+                      document.body.appendChild(panel); //剪切panel粘贴到body最后
+
+                      //以上效果就是在clicked panel位置创建一个temp div，然后把被点击panel脱离该列，剪切并粘贴到body最后
+
+                      document.onmousemove = function(ev) {
+                          var ev = ev || window.event;
+                          panel.style.left = ev.clientX - disX + 'px';
+                          panel.style.top = ev.clientY - disY + 'px';
+
+                          var nearestColumn = getNearestDiv(container, panel); //鼠标移动期间找到和点击panel距离最近的一列div（left，center，right）
+                          var nearestPanel = getNearestDiv(nearestColumn, panel, 'panel'); //找到该列具有panel class的div，并且和被点击panel最近。刨除temp div
+
+                          // console.log(distance(panel,nearestPanel)+'/'+distance(panel,nearestPanel,true));
+                          if (parseInt(distance(panel, nearestPanel)) < parseInt(distance(panel, nearestPanel, true))) { //当前被拖拽panel是距离目标div顶部距离小于到底部距离：插到目标上方
+                              nearestColumn.insertBefore(tempDiv, nearestPanel); //temp插到最近div之前，上方.剪切tempDiv，所以之前的不会存在
+                          } else { //temp要插到目标下方
+                              if (nearestPanel) {
+                                  // appendAfter(nearestColumn,tempDiv,nearestPanel);
+                                  insertAfter(tempDiv, nearestPanel);
+                              } else {
+                                  nearestColumn.appendChild(tempDiv);
+                              }
+                          }
+                      };
+
+                      document.onmouseup = function() {
+                          document.onmousemove = null;
+                          document.onmouseup = null;
+                          container.style.height = '';
+                          //拖拽的panel移动目标temp位置
+                          startMove(panel, {
+                              'top': tempDiv.offsetTop,
+                              'left': tempDiv.offsetLeft
+                          }, function() {
+                              //运动结束把拖拽panel插到temp之前，在取消定位
+                              tempDiv.parentNode.insertBefore(panel, tempDiv);
+                              panel.style.position = '';
+                              panel.style.height = 'auto';
+                              panel.style.overflow = '';
+                              panel.style.width = '100%';
+
+                              //移出temp
+                              tempDiv.parentNode.removeChild(tempDiv);
+                              container.style.height = container.offsetHeight + 'px';
+
+                              //记录操作
+                              for (var i = 0; i < container.children.length; i++) {
+                                  container.children[i].arrs = []; //三列arrs
+                                  for (var j = 0; j < container.children[i].children.length; j++) { //循环每列所有panel div
+                                      if (!first(container.children[i].children[j])) {
+                                          break;
+                                      }
+                                      container.children[i].arrs.push(first(container.children[i].children[j]).index); //把每个panel title存储的index存到相应列对象的数组
+                                  }
+                                  setCookie(container.children[i].id, container.children[i].arrs, 30);
+                                  console.log(container.children[i].arrs);
+                              }
+
+                          });
+                      };
+                  };
+              }
+
+              function getNearestDiv(parent, obj, sClass) { //计算obj距离parent下所有children最近j距离并返回该最近child
+                  var iMin = 99999;
+                  var iMinIndex = -1;
+                  var children = sClass ? parent.getElementsByClassName(sClass) : parent.children; //获取parent下children或者满足某个class的children集合
+
+                  for (var i = 0; i < children.length; i++) {
+                      if (children[i].className != 'temp') { //非临时创建div
+                          var disArr = distance(obj, children[i]); //panel和其他兄弟的距离
+                          for (var j = 0; j < disArr.length; j++) {
+                              if (disArr[j] < iMin) {
+                                  iMin = disArr[j];
+                                  iMinIndex = i;
+                              }
+                          }
+                      }
+                  }
+                  if (iMinIndex == -1) {
+                      return false;
+                  } else {
+                      return children[iMinIndex];
+                  }
+              }
+
+              function distance(obj1, obj2, bBtn) {
+                  var arrs = [];
+                  var a = obj1.offsetLeft - obj2.offsetLeft;
+                  var b = bBtn ? obj1.offsetTop - (obj2.offsetTop + obj2.offsetHeight) : obj1.offsetTop - obj2.offsetTop;
+
+                  //bBtn有值：obj1.offsetTop - (obj2.offsetTop + obj2.offsetHeight)表示obj1顶端到obj2底端距离
+                  //bBtn无值obj1.offsetTop - obj2.offsetTop表示obj1 obj2顶端距离
+                  var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+                  arrs.push(c);
+                  return arrs;
+              }
+          };
+
+          // //父级parent，obj1插到obj2后面
+          // function appendAfter(parent,obj1,obj2){
+          //   if(obj2==last(parent)){  //如果obj2已经是parent最后一个元素，直接就在parent尾部添加obj1
+          //      parent.appendChild(obj1);
+          //   }
+          //   else{  //obj2不是parent最后元素，还要把obj1插到obj2后面。这时找到obj2下一个元素，插到其前
+          //      parent.insertBefore(obj1,next(obj2));
+          //   }
+          // }
+          function insertAfter(obj, refObj) { //insert ojb after refObj
+              var parent = refObj.parentNode;
+              var nextElement = refObj.nextElementSibling;
+              if (nextElement) {
+                  return parent.insertBefore(obj, nextElement);
+              } else {
+                  return parent.appendChild(obj);
+              }
+          }
+
+          function next(obj) {
+              // return obj.nextSibling.nodeType == 1 ? obj.nextSibling : next(obj.nextSibling);
+              return obj.nextElementSibling;
+          }
+
+          function pre(obj) {
+              // return obj.previousSibling.nodeType == 1 ? obj.previousSibling : pre(obj.previousSibling);
+              return obj.previousElementSibling;
+          }
+
+          function first(parent) {
+              // return parent.firstChild.nodeType == 1 ? parent.firstChild : next(parent.firstChild);
+              //文字node跳过
+              return parent.firstElementChild;
+          }
+
+          function last(parent) {
+              // return parent.lastChild.nodeType == 1 ? parent.lastChild : pre(parent.lastChild);
+              return parent.lastElementChild;
+          }
+
+          function startMove(obj, json, fnEnd) {
+              clearInterval(obj.timer);
+              obj.timer = setInterval(function() {
+                  doMove(obj, json, fnEnd);
+              }, 30);
+          }
+
+          function doMove(obj, json, fnEnd) {
+              var iCur = 0;
+              var attr = null;
+              var bStop = true;
+              for (attr in json) {
+                  if (attr == 'opacity') {
+                      if (parseInt(100 * getStyle(obj, attr)) == 0) {
+                          iCur = parseInt(100 * getStyle(obj, attr));
+                      } else {
+                          iCur = parseInt(100 * getStyle(obj, attr)) || 100;
+                      }
+                  } else {
+                      iCur = parseInt(getStyle(obj, attr)) || 0;
+                  }
+                  var iSpeed = (json[attr] - iCur) / 3;
+                  iSpeed = (iSpeed > 0) ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                  if (json[attr] != iCur) {
+                      bStop = false;
+                  }
+                  if (attr == 'opacity') {
+                      obj.style.filter = 'alpha(opacity=' + (iCur + iSpeed) + ')';
+                      obj.style.opacity = (iCur + iSpeed) / 100;
+                  } else {
+                      obj.style[attr] = iCur + iSpeed + 'px';
+                  }
+              }
+              if (bStop) {
+                  clearInterval(obj.timer);
+                  if (fnEnd) {
+                      fnEnd.call(obj);
+                  }
+              }
+          }
+
+          function getStyle(obj, attr) {
+              if (obj.currentStyle) {
+                  return obj.currentStyle[attr];
+              } else {
+                  return getComputedStyle(obj)[attr];
+              }
+          }
+
+          function setCookie(name, value, time) {
+              var oDate = new Date();
+              oDate.setDate(oDate.getDate() + time);
+              var str = name + '=' + encodeURIComponent(value) + ';expires=' + oDate;
+              document.cookie = str;
+              console.log(document.cookie);
+          }
+
+          function getCookie(name) {
+              var arrs1 = document.cookie.split('; ');
+              for (var i = 0; i < arrs1.length; i++) {
+                  var arrs2 = arrs1[i].split('=');
+                  if (arrs2[0] == name) {
+                      return decodeURIComponent(arrs2[1]);
+                  }
+              }
+              return '';
+          }
+
+          function removeCookie(name) {
+              setCookie(name, 1, -1);
+          }
+      </script>
+   </head>
+   <body>
+      <div id="container" class="clear">
+         <div id="leftSection">
+            <div class="panel">
+               <div class="title">0</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+            <div class="panel">
+               <div class="title">1</div>
+               <p>The Node.firstChild read-only property returns the node's first child in the tree, or null if the node is childless. If the node is a Document, it returns the first node in the list of its direct children.</p>
+            </div>
+            <div class="panel">
+               <div class="title">2</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+         </div>
+         <div id="centerSection">
+            <div class="panel">
+               <div class="title">3</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+            <div class="panel">
+               <div class="title">4</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+            <div class="panel">
+               <div class="title">5</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+         </div>
+         <div id="rightSection">
+            <div class="panel">
+               <div class="title">6</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+            <div class="panel">
+               <div class="title">7</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+            <div class="panel">
+               <div class="title">8</div>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+               <p>哈哈</p>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        /*大遮罩*/
+
+        #mask {
+            background: black;
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        /*弹窗*/
+
+        #modal {
+            width: 300px;
+            height: 200px;
+            padding: 10px;
+            background: white;
+            border: 5px solid #333;
+            position: absolute;
+            display: none;
+        }
+
+        #close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            text-decoration: none;
+            color: black;
+        }
+
+        #close:hover {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body style="height:2000px;padding:50px;">
+    <input type="button" value="登陆" id="btn" />
+    <div id="mask"></div>
+    <div id="modal">
+        <a href="javascript:;" id="close">×</a> 这里是登陆的表单等内容
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+        //Math.max();返回数值参数中最大的一个值
+        // alert(Math.max(123, 234, 324, 3, 345));
+
+        /*
+        var oBtn = document.getElementById('btn');
+        var oMask = document.getElementById('mask');
+        var oBox = document.getElementById('modal');
+        var oClose = document.getElementById('close');
+
+        oBtn.onclick = function() {
+            //遮罩层
+            oMask.style.display = 'block';
+            //oMask.style.width = document.body.offsetWidth + 'px';
+            //oMask.style.height = document.body.offsetHeight + 'px';
+            oMask.style.width = Math.max(document.body.offsetWidth, document.documentElement.clientWidth) + 'px';
+            oMask.style.height = Math.max(document.body.offsetHeight, document.documentElement.clientHeight) + 'px';
+
+            //弹出层
+            oBox.style.display = 'block';
+            resetModalPosition();
+        };
+
+        function resetModalPosition() {
+            if (oBox.style.display == 'none') return;
+
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+
+            oBox.style.left = (document.documentElement.clientWidth - oBox.offsetWidth) / 2 + scrollLeft + 'px';
+            oBox.style.top = (document.documentElement.clientHeight - oBox.offsetHeight) / 2 + scrollTop + 'px';
+        }
+
+        window.onscroll = function() {
+            resetModalPosition();
+        };
+
+        window.onresize = function() {
+            if (oMask.style.display == 'none') return;
+            oMask.style.width = Math.max(document.body.offsetWidth, document.documentElement.clientWidth) + 'px';
+            oMask.style.height = Math.max(document.body.offsetHeight, document.documentElement.clientHeight) + 'px';
+
+            resetModalPosition();
+        };
+
+        oClose.onclick = function() {
+            oMask.style.display = 'none';
+            oBox.style.display = 'none';
+        };
+        */
+
+        $('#btn').click(function() {
+            var $mask = $('#mask');
+            var $modal = $('#modal');
+            $mask.show()
+                .css('width', Math.max(document.body.offsetWidth, document.documentElement.clientWidth))
+                .css('height', Math.max(document.body.offsetHeight, document.documentElement.clientHeight));
+            $modal.show()
+                .css('left', ($(window).width() - $modal.outerWidth()) / 2)
+                .css('top', ($(window).height() - $modal.outerHeight()) / 2);
+
+            $('#close').click(function() {
+                $mask.hide();
+                $modal.hide();
+            });
+
+            $(window).on('scroll', function() {
+                resetModalPosition();
+            });
+
+            $(window).on('resize', function() {
+                if ($mask.css('display') == 'none')
+                    return;
+
+                $mask.css('width', Math.max(document.body.offsetWidth, document.documentElement.clientWidth))
+                    .css('height', Math.max(document.body.offsetHeight, document.documentElement.clientHeight));
+
+                resetModalPosition();
+            });
+
+            function resetModalPosition() {
+                if ($modal.css('display') == 'none')
+                    return;
+
+                $modal.css('left', ($(window).width() - $modal.outerWidth()) / 2) + $(document).scrollLeft();
+                $modal.css('top', ($(window).height() - $modal.outerHeight()) / 2 + $(document).scrollTop());
+            }
+        });
+    </script>
+</body>
+
+</html>

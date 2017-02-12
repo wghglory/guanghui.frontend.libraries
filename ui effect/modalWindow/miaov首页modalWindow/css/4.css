@@ -1,0 +1,24 @@
+*{margin:0;padding:0;list-style:none;}
+body{background:url(../img/bg.jpg) no-repeat center 0;}
+.gradient{background:linear-gradient(to bottom,#fff,#ffe7e2); }
+#modal{font-family:微软雅黑;position:fixed;top:calc(50% - 80px);/*top:calc(50% - 120px)*/left:calc(50% - 200px);overflow:hidden;width:400px;height:48px;/* height:230px; */transition:.6s;opacity:0;box-shadow:rgba(148,92,78,.74902) 0 30px 80px;}
+#modal h2{font-family:微软雅黑;font-size:14px;font-weight:normal;line-height:48px;position:relative;height:48px;text-indent:52px;color:#f88a71;background:url(../img/h2_ico.png) no-repeat 20px center;}
+#modal h2:hover{box-shadow:0 20px 40px rgba(148,92,78,.1);}
+#modal h2 .close{position:absolute;top:15px;right:16px;width:20px;height:20px;transition:.5s;background:url(../img/close.png) no-repeat;}
+#modal h2 .close:hover{transform:rotate(360deg);}
+#modal h2 .close:active{transform:rotate(0deg);}
+#modal ul{transition:.5s 600ms linear;transform:translateY(40px);/* transform:translateY(0); */transform-style:preserve-3d;perspective:800px;}
+#modal ul li{font-size:14px;display:flex;height:24px;padding:8px 20px;cursor:pointer;transform:rotateX(120deg);transform-origin:top;opacity:0;color:#f4264d;background:rgba(250,102,66,0);flex:10;}
+#modal ul li *{transition:.5s;}
+#modal ul li:hover{background:rgba(250,102,66,.1);box-shadow:0 30px 80px rgba(148,92,78,.4);}
+#modal ul strong,#modal ul span,#modal ul em{line-height:24px;display:inline-block;height:24px;}
+#modal ul strong{font-weight:normal;width:84px;text-align:center;color:#fff;background:#f4264d;}
+#modal ul span{padding-left:18px;flex:3;}
+#modal ul em{font-style:normal;padding-right:30px;text-align:right;background:url(../img/em_bg.png) no-repeat right 4px;flex:7;}
+#modal ul li:hover strong{background:#ffde00;box-shadow:0 5px 20px rgba(148,92,78,.4);}
+.contact{font-family:微软雅黑;position:absolute;top:56px;left:20px;display:none;width:360px;transition:.5s;text-align:center;opacity:0;}
+.contact h3{font-size:16px;font-weight:normal;line-height:34px;height:34px;color:#f3274c;background:#fff;box-shadow:0 5px 0 rgba(0,0,0,.05);}
+.contact h4{font-family:arial;font-size:14px;font-weight:normal;line-height:30px;height:30px;color:#fff;background:#fba792; /*box-shadow:0 5px 0 rgba(0,0,0,0.05);*/}
+.contact span{font-family:arial;}
+.contact a{font-size:14px;line-height:32px;display:inline-block;width:138px;height:32px;margin-top:20px;text-decoration:none;color:#fff;border-radius:4px;background:#f0b017;box-shadow:0 5px 20px rgba(0,0,0,.1);}
+.contact a:hover{background:#f4264d;}

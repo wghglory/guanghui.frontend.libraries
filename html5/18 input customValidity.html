@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="">
+		<input type="text" id="i1">
+		<input type="submit">
+	</form>
+	<script>
+		var input = document.getElementById('i1');
+		input.addEventListener('invalid', fn, false);
+
+		input.oninput = function(){
+			if(this.value=='prohibition'){
+				this.setCustomValidity('this is not allowed');
+			} else{
+				this.setCustomValidity('');
+			}
+		}
+
+		function fn(ev){
+			alert(this.validity.customError);
+			// ev.preventDefault();
+		}
+	</script>
+</body>
+</html>

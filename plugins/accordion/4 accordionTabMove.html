@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>accordion</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/caret.css">
+    <link rel="stylesheet" href="css/accordionTabMove.css">
+</head>
+
+<body>
+    <div class="container clear">
+        <p>accordionTab1.js : based on accordionMove1.js, shrink and open tab together</p>
+        <p>accordionTab2.js : based on accordionMove2.js, open after shrinking finishes</p>
+        <dl style="font:24px Arial;margin-bottom:20px;">
+            <dt>change js to see 2 effects:</dt>
+            <dd>1. shrink and open together</dd>
+            <dd>2. open after shrinking finishes</dd>
+        </dl>
+        <aside class="accordion fl">
+            <!-- span must be the first element inside h3 -->
+            <div>
+                <h3>section 1<span class="caret"></span></h3>
+                <div>
+                    <ul>
+                        <li>checking account</li>
+                        <li>saving account</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h3>section 2<span class="caret"></span></h3>
+                <div>
+                    <ul>
+                        <li>loan account</li>
+                        <li>investment account</li>
+                        <li>service account</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <h3>section 3<span class="caret"></span></h3>
+                <div><strong style="padding:10px;display:block;">hello this is a good world<br>guanghui is here<br>yuhan is here too<br>love forever</strong></div>
+            </div>
+            <div>
+                <h3>section 4<span class="caret"></span></h3>
+                <div></div>
+            </div>
+        </aside>
+        <section class="rightSection fl">
+            <section class="content" style="background:yellow">
+                <div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                    <p>This is the content of first li</p>
+                    <div>This is the div content of first li</div>
+                </div>
+                <div>
+                    <p>hello world</p>
+                </div>
+                <div>
+                    <p>checking account</p>
+                </div>
+                <div>
+                    <p>i like this game</p>
+                </div>
+                <div>
+                    <p>a good plugin</p>
+                </div>
+            </section>
+        </section>
+    </div>
+    <footer style="text-align: center;">this is the footer</footer>
+    <script src="js/common.js"></script>
+    <script src="js/tweenMove.js"></script>
+    <!-- <script src="js/accordionTabMove1.js"></script> -->
+    <script src="js/accordionTabMove2.js"></script>
+</body>
+
+</html>

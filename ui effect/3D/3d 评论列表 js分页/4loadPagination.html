@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>load data by pagination</title>
+    <link rel="stylesheet" href="css/pagination.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+
+<body>
+    <p>用封装的分页控件</p>
+    <p>分页先入场，然后li入场。点击分页，分页先隐藏，li消失，分页入场，li入场</p>
+    <section id="message">
+        <header>留言回复<span></span></header>
+        <ul id="messageList">
+            <!-- <li>
+                <div class="pic"></div>
+                <div class="dot"></div>
+                <div class="chat">
+                    <div class="post">
+                        <h4><span></span>You're very busying!<time>[2016-07-18 20:48:22]</time></h4>
+                        <p>学习课程</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="pic"></div>
+                <div class="dot"></div>
+                <div class="chat">
+                    <div class="post">
+                        <h4><span></span>空间看m<time>[2016-07-16 17:35:16]</time></h4>
+                        <p>hello i am guanghui</p>
+                    </div>
+                    <div class="reply">
+                        <h4><span></span>Johnny<time>[2016-07-14 11:13:25]</time></h4>
+                        <p>you are so humorous</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="pic"></div>
+                <div class="dot"></div>
+                <div class="chat">
+                    <div class="post">
+                        <h4><span></span>boys<time>[2016-07-18 11:12:21]</time></h4>
+                        <p>yuhou zaici</p>
+                    </div>
+                    <div class="reply">
+                        <h4><span></span>管理员回复<time>[2016-07-14 17:57:49]</time></h4>
+                        <p>我不受si~~</p>
+                    </div>
+                    <div class="reply">
+                        <h4><span></span>管理员回复2<time>[2016-07-16 18:16:43]</time></h4>
+                        <p>this is good</p>
+                    </div>
+                </div>
+            </li> -->
+        </ul>
+        <footer id="pagination">
+            <!-- <a href="javascript:;">首页</a>
+            <a href="javascript:;">上一页</a>
+            <a href="javascript:;" class="active">1</a>
+            <a href="javascript:;">2</a>
+            <a href="javascript:;">3</a>
+            <a href="javascript:;">4</a>
+            <a href="javascript:;">5</a>
+            <a href="javascript:;">6</a>
+            <a href="javascript:;">下一页</a>
+            <a href="javascript:;">末页</a> -->
+        </footer>
+    </section>
+    <script src="js/data.js"></script>
+    <script src="js/pagination.js"></script>
+    <script src="js/4loadData.js"></script>
+    <script>
+        page({
+            id: 'pagination',
+            pageIndex: 1, // 当前要显示页面，1开始
+            pageSize: 4, // 每页显示条数
+            totalCount: data.length, // 总数据个数， 总页码pageCount = Math.ceil(totalCount/pageSize)
+            callBack: function(currentPageIndex, pageSize, totalPageCount) {
+                // alert('当前页:' + currentPageIndex + ',总共页:' + totalPageCount);
+                loadData(currentPageIndex, pageSize);
+            }
+        });
+    </script>
+</body>
+
+</html>

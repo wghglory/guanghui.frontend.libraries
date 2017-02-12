@@ -1,0 +1,498 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+    body,ul{ margin:0;padding:0;}
+    li{ list-style:none;}
+    #container{width:570px;height:420px;margin:30px auto; position:relative;}
+    .list{ width:570px;height:420px;  -webkit-perspective:600px; -webkit-transform-style:preserve-3d; position:absolute;left:0;top:0;}
+    .list li{ width:55px;height:58px; border:1px solid rgba(0,0,0,0); background:red; float:left; background:url(demo/images/1.jpg) no-repeat;box-shadow:0 0 0 blue;}
+    
+    .list:nth-of-type(2) li{ background:url(demo/images/2.jpg) no-repeat;}
+    .list:nth-of-type(3) li{ background:url(demo/images/3.jpg) no-repeat;}
+    .list:nth-of-type(4) li{ background:url(demo/images/4.jpg) no-repeat;}
+    .list:nth-of-type(5) li{ background:url(demo/images/5.jpg) no-repeat;}
+
+    #container input{ width:60px;height:60px; position:absolute; top:100px; border-radius:50%;}
+    #container input:nth-of-type(1){ left:-100px;}
+    #container input:nth-of-type(2){ right:-100px;}
+    </style>
+    <script>
+    window.onload = function() {
+        var aUl = document.getElementsByTagName("ul");
+        var oBtn = document.getElementsByTagName("input");
+        var iColumn = aUl[0].clientWidth / aUl[0].children[0].offsetWidth;
+        var iRow = aUl[0].clientHeight / aUl[0].children[0].offsetHeight;
+
+        var aXy = [];
+        var iNow = 0;
+        oBtn[0].onclick = function() {
+            if (iNow > 0) {
+                iNow--;
+
+                // aUl[iNow].style.display = 'block';
+                aUl[iNow].style.visibility = "visible";
+                // 左上到右下移动，在过渡前移除第一个li结束事件，所以它在过度结束后不会被隐藏，还是visible
+                aUl[iNow].children[0].removeEventListener("webkitTransitionEnd", end, false);
+
+                toTab(aXy[iNow], 0, 0, function() {
+                    with(this.style) {
+                        transition = "1s background,.2s border,.3s  container-shadow,1s  -webkit-transform ease-in,1s  opacity ease-in";
+                        borderColor = "rgba(0,0,0,0)";
+                        boxShadow = "0 0 0 blue";
+                        WebkitTransform = "translate(0px,0px) rotateX(0deg) rotateY(0deg)";
+                        opacity = 1;
+                    };
+                }, 50, 1, 1);
+            }
+        };
+        oBtn[1].onclick = function() {
+            if (iNow < aXy.length - 1) {
+                toTab(aXy[iNow], iColumn - 1, iRow - 1, function() {
+                    with(this.style) {
+                        transition = "1s background,.2s border,.3s .15s container-shadow,2s .3s -webkit-transform,2s .3s opacity";
+                        borderColor = "rgba(0,0,0,0.6)";
+                        boxShadow = "0 0 20px blue";
+                        WebkitTransform = "translate(-50px,-150px) rotateX(-720deg) rotateY(-360deg)";
+                        opacity = 0;
+                    };
+                    // 从右下往左上，到达左上角给第一个li注册结束事件，去hidden当前图片
+                    if (this.xIndex == 0 && this.yIndex == 0) {
+                        this.addEventListener("webkitTransitionEnd", end, false);
+                    }
+
+                }, 50, -1, -1);
+                iNow++;
+            }
+        };
+
+        //1存数据      2设置第一张图片zindex最高
+        for (var i = 0; i < aUl.length; i++) {
+            aUl[i].style.zIndex = aUl.length - i;
+            aXy.push(setXY(aUl[i].children, iColumn, iRow));  //存储每隔ul所有li坐标
+            aUl[i].onclick = (function(index) {
+                return function() {
+                    alert(index);
+                }
+            })(i);
+        }
+
+    }
+
+    // transitionEnd时候隐藏图片，不然虽然第一张图片opacity0，但他zindex最高，显示了第二张图片但点击是第一张图，透明度0罢了
+    // 所以一定要在过度结束后改变display或visibility
+    // 不能用display block，会影响css3渲染效果
+    function end(e) {   
+        console.log(e, e.type, e.propertyName);
+        if (e.propertyName == '-webkit-transform' || e.propertyName == 'transform') {
+            // this.parentNode.style.display = 'none';
+            this.parentNode.style.visibility = "hidden";
+            document.title = 'previous pic hidden';
+        }
+    }
+
+    function toTab(coordinates, x, y, fn, iDelay, iDisX, iDisY) {
+        if (!coordinates[y] || !coordinates[y][x]) {
+            return;
+        }
+        if (fn) {
+            fn.call(coordinates[y][x]);
+            clearTimeout(coordinates[y][x].timer);
+            coordinates[y][x].timer = setTimeout(function() {
+                toTab(coordinates, x + iDisX, y, fn, iDelay, iDisX, iDisY);
+                toTab(coordinates, x, y + iDisY, fn, iDelay, iDisX, iDisY);
+            }, iDelay);
+        }
+    }
+
+    // i = 0 且内层循环结束记录第一行数据
+    // i = 1 且内层循环结束记录第二行数据
+    function setXY(collection, iColumn, iRow) {
+        var arr = [];
+        for (var i = 0; i < iRow; i++) {
+            var arr2 = [];
+            for (var j = 0; j < iColumn; j++) {
+                collection[i * iColumn + j].xIndex = j;
+                collection[i * iColumn + j].yIndex = i;
+                collection[i * iColumn + j].style.backgroundPosition = -j * 57 + "px -" + i * 60 + "px"; //设置图片背景！
+                arr2.push(collection[i * iColumn + j]); //arr2 c[0] c[1] c[2] c[3] c[column-1] 每行数据
+            }
+            arr.push(arr2);
+        }
+        // console.log(arr);
+        return arr; //arr[p][q] 代表collection中第p+1行q+1列的元素
+    }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <input type="button" value="上一张" />
+        <input type="button" value="下一张" />
+        <ul class="list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul class="list">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+
+</html>

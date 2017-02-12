@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>circle</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.moveTo(200, 200);
+    //    arc(x, y, radius, StartArc, EndArc, rotation)
+    //    arc = 角度 * Math.PI / 180
+    //    圆从右侧为0弧度,下为90度,左+-180,上-90
+    //    最后一位false,默认值,是顺时针
+    context.arc(200, 200, 150, 0, 90 * Math.PI / 180, false);
+    context.stroke();
+</script>
+</html>

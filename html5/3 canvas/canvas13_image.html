@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw an image</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        .c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas class="c1" width="400" height="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementsByClassName('c1')[0];
+    var context = canvas.getContext('2d');
+
+    var img = new Image();
+    img.src = 'images/canvas13.png';
+    img.onload = function () {
+        draw(this);
+    };
+
+    function draw(obj) {
+        // context.drawImage(obj, 0, 0);
+
+        //参数 : 3(图片，在canvas中x坐标 , 在canvas中y坐标)  5(图片，在canvas中x坐标 , 在canvas中y坐标 ,在canvas中width , 在canvas中height )  9( 图片，在图片中x坐标 , 在图片中y坐标 ,在图片中width , 在图片中height, 在canvas中x坐标 , 在canvas中y坐标 ,在canvas中width , 在canvas中height )
+
+        //context.drawImage( obj , 50 , 50 );
+
+        //context.drawImage( obj , 50 , 50 , 200 , 200 );
+
+        context.drawImage( obj , 176 , 0 , 156 , 110 ,  50 , 50 , 200 , 200 );
+    }
+
+</script>
+</html>

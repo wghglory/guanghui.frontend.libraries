@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+	body,ul{ margin:0;padding:0;}
+	li{ list-style:none;}
+	.list{ width:570px;height:420px; margin:30px auto; -webkit-perspective:600px; -webkit-transform-style:preserve-3d;}
+	.list li{ width:55px;height:58px; border:1px solid rgba(0,0,0,0); background:red; float:left; background:url(demo/images/1.jpg) no-repeat;box-shadow:0 0 0 blue;}
+	</style>
+    <script>
+    window.onload = function() {
+        var oList = document.getElementById("list");
+        var aLi = oList.getElementsByTagName("li");
+        var oBtn = document.getElementsByTagName("input");
+        var iColumn = oList.clientWidth / aLi[0].offsetWidth;
+        var iRow = oList.clientHeight / aLi[0].offsetHeight;
+
+        var coordinates = setXY(aLi, iColumn, iRow);
+
+        oBtn[0].onclick = function() {
+            toTab(coordinates, iColumn - 1, iRow - 1, function() {
+                // with(this.style) {
+                //     transition = "1s background,.2s border,.3s .15s box-shadow,2s .3s -webkit-transform,2s .3s opacity";
+                //     borderColor = "rgba(0,0,0,0.6)";
+                //     boxShadow = "0 0 20px blue";
+                //     WebkitTransform = "translate(-50px,-150px) rotateX(-720deg) rotateY(-360deg)";
+                //     opacity = 0;
+                // };
+
+                (function(s){
+					s.transition = "1s background,.2s border,.3s .15s box-shadow,2s .3s -webkit-transform,2s .3s opacity";
+                    s.borderColor = "rgba(0,0,0,0.6)";
+                    s.boxShadow = "0 0 20px blue";
+                    s.WebkitTransform = "translate(-50px,-150px) rotateX(-720deg) rotateY(-360deg)";
+                    s.opacity = 0;
+                }(this.style));
+            }, 50, -1, -1);
+        };
+        oBtn[1].onclick = function() {
+            toTab(coordinates, 0, 0, function() {
+
+        	var s = this.style;
+			s.transition = "1s background,.2s border,.3s  box-shadow,1s  -webkit-transform ease-in,1s  opacity ease-in";
+            s.borderColor = "rgba(0,0,0,0)";
+            s.boxShadow = "0 0 0 blue";
+            s.WebkitTransform = "translate(0px,0px) rotateX(0deg) rotateY(0deg)";
+            s.opacity = 1;
+
+            }, 50, 1, 1);
+        };
+   
+    }
+
+
+    function toTab(coordinates, x, y, fn, iDelay, iDisX, iDisY) {
+        if (!coordinates[y] || !coordinates[y][x]) {
+            return;
+        }
+        if (fn) {
+            fn.call(coordinates[y][x]);
+            clearTimeout(coordinates[y][x].timer);
+            coordinates[y][x].timer = setTimeout(function() {
+                toTab(coordinates, x + iDisX, y, fn, iDelay, iDisX, iDisY);
+                toTab(coordinates, x, y + iDisY, fn, iDelay, iDisX, iDisY);
+            }, iDelay);
+        }
+    }
+
+    // i = 0 且内层循环结束记录第一行数据
+    // i = 1 且内层循环结束记录第二行数据
+    function setXY(collection, iColumn, iRow) {
+        var arr = [];
+        for (var i = 0; i < iRow; i++) {
+            var arr2 = [];
+            for (var j = 0; j < iColumn; j++) {
+                collection[i * iColumn + j].xIndex = j;
+                collection[i * iColumn + j].yIndex = i;
+                collection[i * iColumn + j].style.backgroundPosition = -j * 57 + "px -" + i * 60 + "px"; //设置图片背景！
+                arr2.push(collection[i * iColumn + j]); //arr2 c[0] c[1] c[2] c[3] c[column-1] 每行数据
+            }
+            arr.push(arr2);
+        }
+        // console.log(arr);
+        return arr; //arr[p][q] 代表collection中第p+1行q+1列的元素
+    }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="走你" />
+    <input type="button" value="回来" />
+    <ul class="list" id="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+
+</html>

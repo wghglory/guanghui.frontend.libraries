@@ -1,0 +1,23 @@
+.container{margin: 40px auto 0;width:1024px;}
+.fl{float:left;}
+.fr{float:right;}
+.clear{zoom:1;}
+.clear:after{content:""; display:block;clear:both;}
+
+.accordion{width: 300px;}
+.accordion h3{font:24px/24px Arial;padding:8px;background-color: #7fbcdb;color:#fff;position: relative;z-index: 1;}
+.accordion h3.active{background-color: #337ab7;}
+.accordion h3 span{position: absolute;right: 20px;top:18px;}
+.accordion h3 span.caret{border-top-color: #fff;}
+.accordion h3 span.caret-up{border-bottom-color: #fff;}
+.accordion h3+div{position: absolute;width: 100%;top:0;}
+.accordion div{display: none;font:16px Arial;}
+.accordion>div{/*margin:6px 0*/padding: 3px 0;display: block;position: relative;}/*except first level div children, to hide div under h3*/
+.accordion ul{padding:0;margin: 0;}
+.accordion li{padding: 8px;border:1px solid #ccc;border-top: none;color:#848b8e;}
+.accordion li:hover{background: #F5F5F5;color: #000;}
+.accordion li.active{background: #b5b1b1;color: #000;}
+
+.rightSection{width:694px; padding-left:30px;}
+.content {position: relative;}
+.content >div{display: none;position: absolute;opacity:0;width: 100%;}

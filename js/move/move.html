@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: red;
+            top: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <!-- <script src="startMove.js"></script> -->
+    <script src="tweenMove.js"></script>
+    <script>
+        var div = document.querySelector('div');
+        // startMove(div, {
+        //         'left': 500,
+        //         'top': 66,
+        //         'opacity': 10,
+        //         'width': 400,
+        //         'padding': 55,
+        //         'marginTop': 44
+        //     },
+        //     function() {
+        //         console.log('done');
+        //         startMove(div, {
+        //             'left': 50,
+        //             'top': 460,
+        //             'opacity': 100,
+        //             'width': 40,
+        //         });
+        //     }
+        // );
+        //
+
+        tweenMove(div, {
+            'top': 300,
+            'opacity': 50,
+            'rotate': 30,
+            'translateX': 300,
+            'scale': 200 //2倍
+        }, 2000, 'elasticOut', function() {
+            alert('done');
+        }, function() {
+            console.log('running');
+        });
+    </script>
+</body>
+
+</html>

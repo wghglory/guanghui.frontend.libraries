@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>合成</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+
+        #img1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+<img src="" alt="" id="img1">
+</body>
+<script>
+    var img = document.getElementById('img1');
+
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    function Shape(x, y, r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+
+        context.beginPath();
+        context.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fill();
+    }
+
+    Shape.prototype.reDraw = function (point) {
+        context.beginPath();
+        context.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        context.closePath();
+        context.fill();
+
+        if (context.isPointInPath(point.x, point.y)) {   //只有点击到"最后一次绘制的图形"才真.
+            this.click();
+        }
+    };
+
+    var c1 = new Shape(100, 100, 50);
+    var c2 = new Shape(200, 200, 50);
+
+    c1.click = function () {
+        alert('c1 clicked');
+    };
+
+    c2.click = function () {
+        alert('c2 clicked');
+    };
+
+    canvas.onmousedown = function (ev) {
+        var ev = ev || window.event;
+        var point = {
+            x: ev.clientX - canvas.offsetLeft,
+            y: ev.clientY - canvas.offsetTop
+        };
+
+        c1.reDraw(point);
+        c2.reDraw(point);
+    };
+</script>
+</html>

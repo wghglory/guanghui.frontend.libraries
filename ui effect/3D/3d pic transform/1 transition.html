@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>transition</title>
+	<style>
+		/*1 happen together with same time to finish*/
+		/*div{width: 100px;height: 100px;background-color: red;transition: 1s;}*/   
+
+		 /*2 happen together, different time to finish */
+		/*div{width: 100px;height: 100px;background-color: red;transition: 1s width,2s height;}*/
+
+		/*3 height defer 1s and 2s to finish, width runs and 1s finish*/
+		div{width: 100px;height: 100px;background-color: red;transition: 1s width,2s 1s height;}
+		div:hover{width: 200px;height: 200px;background: blue;}
+	</style>
+</head>
+<body>
+	<div></div>
+</body>
+</html>

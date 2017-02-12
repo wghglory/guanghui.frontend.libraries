@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="">
+		<input type="number" required id="i1" pattern="\d{1,5}" maxlength="5">
+		<input type="range" id="i2" value="2" min="1" max="10" step="2">
+		<input type="submit">
+	</form>
+	<script>
+		var input = document.getElementById('i1');
+		var input2 = document.getElementById('i2');
+		input.addEventListener('invalid', function(ev){
+			alert('valid:' + this.validity.valid);
+			alert('valueMissing:' + this.validity.valueMissing);  //No input =>true
+			alert('typeMismatch:' + this.validity.typeMismatch); 
+			alert('patternMismatch:' + this.validity.patternMismatch); 
+			alert('tooLong:' + this.validity.tooLong);   //maxlength 
+			ev.preventDefault();
+		}, false);
+
+		input2.addEventListener('invalid', function (ev) {
+			alert(this.validity.rangeOverflow);
+		}, false);
+	</script>
+</body>
+</html>

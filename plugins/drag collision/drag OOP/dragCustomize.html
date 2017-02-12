@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>拖拽的组件开发 自定义事件</title>
+	<style>
+	#div1{ width:100px; height:100px; background:red; position:absolute;}
+	#div2{ width:100px; height:100px; background:yellow; position:absolute; left:100px;}
+	#div3{ width:100px; height:100px; background:blue; position:absolute; left:200px;}
+	#div4{ width:100px; height:100px; background:green; position:absolute; left:300px;}
+	</style>
+</head>
+
+<body>
+	<div id="div1"></div>
+	<div id="div2"></div>
+	<div id="div3"></div>
+	<div id="div4"></div>
+	<script src="dragCustomize.js"></script>
+	<script>
+		var d1 = new Drag();
+		d1.init({
+			id: 'div1'
+		});
+
+		var d2 = new Drag();
+		d2.init({
+			id: 'div2'
+		});
+		bindEvent(d2, 'toDown', function() {
+			document.title = 'hello';
+		});
+		bindEvent(d2, 'toDown', function() {
+			document.body.style.background = 'black';
+		});
+
+		var d3 = new Drag();
+		d3.init({
+			id: 'div3'
+		});
+		bindEvent(d3, 'toDown', function() {
+			document.title = '妙味';
+		});
+		bindEvent(d3, 'toUp', function() {
+			document.title = '课堂';
+		});
+
+		var d4 = new Drag();
+		d4.init({
+			id: 'div4'
+		});
+		bindEvent(d4, 'toUp', function() {
+			document.title = 'byebye';
+		});
+		};
+	</script>
+</body>
+
+</html>

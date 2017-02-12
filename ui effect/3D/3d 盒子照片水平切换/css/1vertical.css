@@ -1,0 +1,33 @@
+body{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
+
+.container{width:600px;margin:300px auto 0;perspective:600px;perspective-origin:-200px -500px;}
+#list{position:relative;height:300px;transition:3.5s;transform-origin:center center -150px;transform-style:preserve-3d;}
+
+/* 1FRONT, 2BOTTOM, 3BACK, 4TOP */
+/* 2在屏幕上，4向屏幕后方进去600px */
+
+/* 用定位，但不用left top */
+#list li{font:60px/300px Arial;position:absolute;width:600px;height:300px;text-align:center;}
+#list li:nth-child(1){background-color:#f7f07c;}
+#list li:nth-child(2){transform:translateZ(-300px) rotateX(-90deg);transform-origin:bottom;background-color:#b562fb;}
+#list li:nth-child(3){transform:translateZ(-300px) rotateX(180deg);background-color:#6cfad0;}
+#list li:nth-child(4){transform:translateZ(-300px) rotateX(90deg);transform-origin:top;background-color:#eea7a7;}
+.container:hover #list{transform:rotateX(360deg);
+
+/* 用定位，用top left */
+/* #list li{font:60px/300px Arial;position:absolute;width:600px;height:300px;text-align:center;}
+#list li:nth-child(1){background-color:#f7f07c;}
+#list li:nth-child(2){top:100%;transform:rotateX(-90deg);transform-origin:top;background-color:#b562fb;}
+#list li:nth-child(3){transform:translateZ(-300px) rotateX(180deg);background-color:#6cfad0;}
+#list li:nth-child(4){top:-100%;transform:rotateX(90deg);transform-origin:bottom;background-color:#eea7a7;}
+.container:hover #list{transform:rotateX(360deg);} */
+
+/* 不用定位 */
+/* #list li{font:60px/300px Arial;width:600px;height:300px;text-align:center;}
+#list li:nth-child(1){background-color:#f7f07c;}
+#list li:nth-child(2){transform:translateY(-300px) translateZ(-300px) rotateX(-90deg);transform-origin:bottom;background-color:#b562fb;}
+#list li:nth-child(3){transform:translateY(-600px) translateZ(-300px) rotateX(180deg);background-color:#6cfad0;}
+#list li:nth-child(4){transform:translateY(-900px) translateZ(-300px) rotateX(90deg);transform-origin:top;background-color:#eea7a7;}
+.container:hover #list{transform:rotateX(360deg);} */
+

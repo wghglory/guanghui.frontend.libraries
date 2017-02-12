@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+    * {margin: 0; padding: 0;}
+    #container { width: 1000px; border: 1px solid red; position: relative; margin: 50px auto 0; }
+    #container img { position: absolute; }
+
+    #loader { width: 100%; height: 60px; background: url('images/loader.gif') no-repeat center #FFF; position: fixed; bottom: 0; left: 0; display: none; }
+    </style>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script>
+    /*
+        固定列：浮动布局
+        定位
+        */
+    $(function() {
+
+        var oContainer = $('#container');
+        var iColumn = 0;
+        var iWidth = 200;
+        var iSpace = 10;
+        var iOuterWidth = iWidth + iSpace;
+        var sUrl = 'http://www.wookmark.com/api/json/popular?callback=?';
+        var arrT = [];
+        var arrL = [];
+        var iPage = 0;
+        var iBtn = true;
+
+        function setColumn() {
+            iColumn = Math.floor($(window).innerWidth() / iOuterWidth);
+            if (iColumn < 3) {
+                iColumn = 3;
+            } else if (iColumn > 6) {
+                iColumn = 6;
+            }
+            oContainer.css('width', iColumn * iOuterWidth - 10);
+        }
+        setColumn();
+
+        // 初始化 arrTop and arrLeft (img left top)
+        for (var i = 0; i < iColumn; i++) {
+            arrT[i] = 0;
+            arrL[i] = iOuterWidth * i;
+        }
+
+        function getData() {
+            if (!iBtn) { //还没加载好当前页数据，则不获取下一页数据
+                return;
+            }
+            iBtn = false;
+            iPage++;
+            $.getJSON(sUrl, { page: iPage }, function(jData) {
+                //{
+                //  id: "580178",
+                //  title: "Pinterest • The world’s catalog of ideas",
+                //  referer: "https://www.pinterest.com/pin/145733737920332437/",
+                //  url: "http://www.wookmark.com/image/580178/pinterest-the-world-s-catalog-of-ideas",
+                //  width: "500",
+                //  height: "500",
+                //  image: "http://www.wookmark.com/images/original/580178_wookmark.jpg",
+                //  preview: "http://www.wookmark.com/images/thumbs/580178_wookmark.jpg"
+                // }
+                $('#loader').show();
+                $.each(jData, function(k, v) {
+
+                    var oImg = $('<img>');
+
+                    //按比例显示图片高度
+                    var iHeight = v.height * (iWidth / v.width);
+                    oImg.css({
+                        width: iWidth,
+                        height: iHeight
+                    });
+
+                    //这里的思路是查看每列的高度，找到最小高度的列并添加图片
+                    var columnIndex = getColumnIndexHasMinimumHeigth(); //拥有最小高度列索引
+                    //set img left and top
+                    oImg.css({
+                        left: arrL[columnIndex],
+                        top: arrT[columnIndex]
+                    });
+                    //添加图片后更新该列的高度
+                    arrT[columnIndex] += iHeight + 10;
+
+                    oContainer.append(oImg);
+
+                    var objImg = new Image();
+                    objImg.src = v.preview;
+                    objImg.onload = function() {
+                        oImg.attr('src', this.src);
+                    };
+
+
+                    setTimeout(function() {
+                        $('#loader').hide();
+                    }, 1000);
+
+                    iBtn = true;
+
+                });
+
+            });
+        }
+        getData();
+
+        function getColumnIndexHasMinimumHeigth() {
+            var columnHeight = arrT[0]; //第一列的高度存下来 
+            var columnIndex = 0;
+
+            for (var i = 1; i < arrT.length; i++) {
+                if (arrT[i] < columnHeight) {
+                    // columnHeight = arrT[i];
+                    columnIndex = i;
+                }
+            }
+            return columnIndex;
+        }
+
+
+        $(window).on('scroll', function() {
+            var columnIndex = getColumnIndexHasMinimumHeigth();
+            var iH = $(window).scrollTop() + $(window).innerHeight(); //滚动距离 + 可视区高度
+            console.log('滚动距离和可视区高度：' + iH + '，累积高度和marginTop:' + (arrT[columnIndex] + 50)); //(arrT[columnIndex] + 50)： 积累高度 + 50 marginTop
+            if (arrT[columnIndex] + 50 < iH) { //滚动到底端加载下一页数据
+                getData();
+            }
+        });
+
+        $(window).on('resize', function() {
+            var previousColumn = iColumn; //在resize瞬间找到resize前列数。
+            setColumn(); //重新计算现在列数。可能会改变iColumn
+            if (previousColumn == iColumn) { //如果resize幅度很小，没有改变列数则结束
+                return;
+            }
+            arrT = [];
+            arrL = [];
+            for (var i = 0; i < iColumn; i++) {
+                arrT[i] = 0;
+                arrL[i] = iOuterWidth * i;
+            }
+            oContainer.find('img').each(function() { //让每一个图片运动，找最小高度的列append上去
+
+                var columnIndex = getColumnIndexHasMinimumHeigth();
+                /*$(this).css({
+                    left    :   arrL[columnIndex],
+                    top     :   arrT[columnIndex]
+                });*/
+                $(this).animate({
+                    left: arrL[columnIndex],
+                    top: arrT[columnIndex]
+                }, 1000);
+                arrT[columnIndex] += $(this).height() + 10; //更新累积的高度
+
+            });
+        })
+
+
+
+    })
+    </script>
+</head>
+
+<body>
+    <div id="container"></div>
+    <div id="loader"></div>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>重新打开页面显示之前值</title>
+    <script>
+        window.onload = function() {
+            var aInput = document.getElementsByTagName('input');
+            var oT = document.getElementById('t1');
+
+            if (window.localStorage.getItem('name')) {
+
+                aInput[0].value = window.localStorage.getItem('name');
+
+            }
+
+            if (window.localStorage.getItem('gender')) {
+
+                for (var i = 1; i < aInput.length; i++) {
+                    if (aInput[i].value == window.localStorage.getItem('gender')) {
+
+                        aInput[i].checked = true;
+
+                    }
+                }
+
+            }
+
+            if (window.localStorage.getItem('content')) {
+                oT.value = window.localStorage.getItem('content');
+            }
+
+            window.onunload = function() {
+
+
+                if (aInput[0].value) {
+                    window.localStorage.setItem('name', aInput[0].value);
+                }
+
+                for (var i = 1; i < aInput.length; i++) {
+                    if (aInput[i].checked) {
+                        window.localStorage.setItem('gender', aInput[i].value);
+                    }
+                }
+
+                if (oT.value) {
+                    window.localStorage.setItem('content', oT.value);
+                }
+
+            };
+
+        };
+    </script>
+</head>
+
+<body>
+    <p>
+        用户名:<input type="text" />
+    </p>
+    <p>
+        性别 : <input type="radio" value="男" name="gender" />男
+        <input type="radio" value="女" name="gender" />女
+    </p>
+    内容 : <textarea id="t1"></textarea>
+</body>
+
+</html>

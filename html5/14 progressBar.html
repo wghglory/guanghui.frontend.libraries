@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>progress bar</title>
+</head>
+
+<body>
+    <progress max="100" value="0" id="progress">
+    <span>0%</span>
+</progress>
+    <script>
+        var oProgress = document.getElementById("progress");
+        var i = 0;
+        var oTimer = setInterval(function() {
+            i++;
+            oProgress.value = i;
+            oProgress.innerHTML = "<span>" + i + "%</span>";
+            if (i == 100) {
+                clearInterval(oTimer);
+            }
+        }, 30);
+    </script>
+</body>

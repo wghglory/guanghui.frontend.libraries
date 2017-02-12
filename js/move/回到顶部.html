@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            width: 2000px;
+        }
+
+        #gotoTop {
+            position: fixed;
+            right: 50px;
+            bottom: 100px;
+            display: none;
+            background-color: green;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <input type="button" id="gotoTop" value="back to top">
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <p>我是内容部分，有很多恩多很多</p>
+    <script src="move.js"></script>
+    <script>
+        var goTop = document.getElementById('gotoTop');
+        window.onscroll = function() {
+            scroll().scrollTop > 0 ? goTop.style.display = 'block' : goTop.style.display = 'none'; // 如果大于0 就显示 否则隐藏
+            leader = scroll().scrollTop; // 把 卷去的头部 给  起始位置
+        };
+
+        var leader = 0,
+            target = 0,
+            timer = null;
+        isMoving = false;
+        // leader 起始位置  target  目标位置
+        goTop.onclick = function() {
+
+            if (!isMoving) {
+                timer = setInterval(function() {
+                    isMoving = true;
+                    leader = leader + (target - leader) / 10;
+                    window.scrollTo(0, leader); // 去往页面中的某个位置
+                    if (leader == target) {
+                        clearInterval(timer);
+                        isMoving = false;
+                    }
+                }, 20);
+            }
+
+
+        };
+
+        /**
+         * window scroll
+         * @return {[json]}  left and top
+         * usage:
+         *         window.onscroll = function() {
+                        console.log(scroll().top);
+                   }
+         */
+        function scroll() {
+            // if (window.pageYOffset) //  ie9+ 和其他浏览器
+            // {
+            //     return {
+            //         scrollLeft: window.pageXOffset,
+            //         scrollTop: window.pageYOffset
+            //     };
+            // } else if (document.compatMode == "CSS1Compat") // 声明的了 DTD
+            // // 检测是不是怪异模式的浏览器 -- 就是没有 声明<!DOCTYPE html>
+            // {
+            //     return {
+            //         scrollLeft: document.documentElement.scrollLeft,
+            //         scrollTop: document.documentElement.scrollTop
+            //     };
+            // }
+            // return { //  剩下的肯定是怪异模式的
+            //     scrollLeft: document.body.scrollLeft,
+            //     scrollTop: document.body.scrollTop
+            // };
+
+            return {
+                scrollTop: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+                scrollLeft: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
+            };
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>被点li左上颜色变化</title>
+    <style>
+        body,ul{ margin:0;padding:0;}
+        li{ list-style:none;}
+        #list{ width:600px;height:420px; margin:30px auto;}
+        #list li{ width:58px;height:58px; border:1px solid #000; background:red; float:left;}
+    </style>
+    <script>
+    window.onload = function() {
+        var oList = document.getElementById("list");
+        var aLi = oList.getElementsByTagName("li");
+        var iColumn = oList.clientWidth / aLi[0].offsetWidth;
+        var iRow = oList.clientHeight / aLi[0].offsetHeight;
+        var coordinates = setXY(aLi, iColumn, iRow);
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].onclick = function() {
+                toTab(coordinates, this.xIndex, this.yIndex, function() {
+                    this.style.background = "yellow";
+                }, 50);
+
+            };
+        }
+
+    }
+
+    // function toTab(coordinates, x, y, fn) {
+    //     if (!coordinates[y] || !coordinates[y][x]) {
+    //         return;
+    //     }
+    //     if (fn) {
+    //         fn.call(coordinates[y][x]);
+            
+    //         toTab(coordinates, x - 1, y, fn);
+    //         toTab(coordinates, x, y - 1, fn);     
+    //     }
+    // }
+
+    //recursive function, 当前li左、上所有li变换
+    function toTab(coordinates, x, y, fn, iDelay) {
+        if (!coordinates[y] || !coordinates[y][x]) {
+            return;
+        }
+        if (fn) {
+            fn.call(coordinates[y][x]);
+            setTimeout(function() {
+                toTab(coordinates, x - 1, y, fn, iDelay);
+                toTab(coordinates, x, y - 1, fn, iDelay);
+            }, iDelay)
+        }
+    }
+
+    // i = 0 且内层循环结束记录第一行数据
+    // i = 1 且内层循环结束记录第二行数据
+    function setXY(collection, iColumn, iRow) {
+        var arr = [];
+        for (var i = 0; i < iRow; i++) {
+            var arr2 = [];
+            for (var j = 0; j < iColumn; j++) {
+                collection[i * iColumn + j].xIndex = j;
+                collection[i * iColumn + j].yIndex = i;
+                arr2.push(collection[i * iColumn + j]);  //arr2 c[0] c[1] c[2] c[3] c[column-1] 每行数据
+            }
+            arr.push(arr2);
+        }
+        // console.log(arr);
+        return arr;   //arr[p][q] 代表collection中第p+1行q+1列的元素
+    }
+    </script>
+</head>
+
+<body>
+    <ul id="list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+
+</html>

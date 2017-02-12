@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw 2 triangles</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" width="400" height="400">your browser doesn't support canvas</canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.save();     //save and restore: 红色不在作用到第二个三角形, 第二个三角形默认用黑色. 也可以再画第二前重新设置fillStyle.
+    context.fillStyle = 'red';
+    context.beginPath();
+    context.moveTo(100, 100);
+    context.lineTo(200, 200);
+    context.lineTo(300, 200);
+    context.closePath();
+    context.fill();
+    context.restore();
+
+
+    //context.fillStyle = 'blue';
+    context.beginPath();
+    context.moveTo(100, 200);
+    context.lineTo(200, 300);
+    context.lineTo(300, 300);
+    context.closePath();
+    context.fill();//context.stroke();
+</script>
+</html>

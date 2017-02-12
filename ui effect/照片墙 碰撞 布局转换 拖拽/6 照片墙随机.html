@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>随机</title>
+<style>
+*{ margin:0; padding:0;}
+#container{ width:660px; position:relative; margin:10px auto;}
+li{ width:200px; height:150px; margin:10px; float:left; list-style:none;}
+</style>
+<script src="move.js"></script>
+<script>
+window.onload = function(){
+	var aLi = document.getElementsByTagName('li');
+	var izIndex = 2;
+	var arr = [];
+	var oInput = document.getElementById('input1');
+
+	//store left and top for each image
+	for(var i=0;i<aLi.length;i++){
+		arr.push( [ aLi[i].offsetLeft , aLi[i].offsetTop ] );
+	}
+	
+	//change layout to position
+	for(var i=0;i<aLi.length;i++){
+		aLi[i].style.position = 'absolute';
+		aLi[i].style.left = arr[i][0] + 'px';
+		aLi[i].style.top = arr[i][1] + 'px';
+		aLi[i].style.margin = 0;   //cancel the margin!!! this margin is used in float layout.
+	}
+	
+	for(var i=0;i<aLi.length;i++){
+		aLi[i].index = i;   //存储照片索引！
+		drag(aLi[i]);
+	}
+	
+	oInput.onclick = function(){	
+		//随机排序索引
+		var randomArr = [0,1,2,3,4,5,6,7,8];
+		
+		randomArr.sort(function(n1,n2){
+			return Math.random() - 0.5;
+		});
+		
+		//按照随机数组移动
+		for(var i=0;i<aLi.length;i++){
+			startMove( aLi[i] , { left : arr[randomArr[i]][0] , top : arr[randomArr[i]][1] } );
+			aLi[i].index = randomArr[i];	//更新索引！
+		}
+	};
+	
+	function drag(obj){
+		var disX = 0;
+		var disY = 0;
+		obj.onmousedown = function(ev){
+			
+			obj.style.zIndex = izIndex++; //使得当前拖拽的图片层级最高
+			
+			var ev = ev || window.event;
+			disX = ev.clientX - obj.offsetLeft;
+			disY = ev.clientY - obj.offsetTop;
+			
+			document.onmousemove = function(ev){
+				var ev = ev || window.event;
+				obj.style.left = ev.clientX - disX + 'px';
+				obj.style.top = ev.clientY - disY + 'px';
+				
+				//先清空所有border，然后后面给最近的照片加上border
+				for(var i=0;i<aLi.length;i++){
+					aLi[i].style.border = '';
+				}
+
+				//寻找最近的照片
+				var nL = findNearestLi(obj);
+				
+				//有可能拖到别处，没有碰上
+				if(nL){
+					nL.style.border = '2px red solid';
+				}
+				
+			};
+			
+			document.onmouseup = function(){
+				document.onmousemove = null;
+				document.onmouseup = null;
+				
+				var nL = findNearestLi(obj);
+				var tmp = 0;
+				
+				if(nL){
+					//最近的照片（被交换的照片）移动到拖拽照片之前位置
+					startMove( nL , { left : arr[obj.index][0] , top : arr[obj.index][1] } );
+					//拖拽照片移动到最近的照片（被交换的照片）的位置
+					startMove( obj , { left : arr[nL.index][0] , top : arr[nL.index][1] } );
+					nL.style.border = '';
+					
+					//重新更新图片索引
+					tmp = obj.index;
+					obj.index = nL.index;
+					nL.index = tmp;
+				}
+				else{   //如果没碰上，没找到最近元素，当前拖拽图片归位
+					startMove( obj , { left : arr[obj.index][0] , top : arr[obj.index][1] } );
+				}
+				
+			};
+			
+			return false;		
+		};
+	}
+	
+	function findNearestLi(obj){
+		
+		var value = 9999;
+		var index = -1;
+		
+		for(var i=0;i<aLi.length;i++){
+			//碰撞检测
+			if(  obj!=aLi[i] && isCollision(obj,aLi[i]) ){//刨除自己，和其他比较
+				var c = calculateDistance(obj,aLi[i]);
+				
+				if( c < value ){
+					value = c;
+					index = i;
+				}	
+			}
+		}
+		
+		if(index != -1){
+			return aLi[index];
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
+	function calculateDistance(obj1,obj2){
+		var a = obj1.offsetLeft - obj2.offsetLeft;
+		var b = obj1.offsetTop - obj2.offsetTop;
+		return Math.sqrt(a*a + b*b);
+	}
+	
+	
+	function isCollision(obj1,obj2){
+		var L1 = obj1.offsetLeft;
+		var R1 = obj1.offsetLeft + obj1.offsetWidth;
+		var T1 = obj1.offsetTop;
+		var B1 = obj1.offsetTop + obj1.offsetHeight;
+		
+		var L2 = obj2.offsetLeft;
+		var R2 = obj2.offsetLeft + obj2.offsetWidth;
+		var T2 = obj2.offsetTop;
+		var B2 = obj2.offsetTop + obj2.offsetHeight;
+		
+		if( R1<L2 || L1>R2 || B1<T2 || T1>B2 ){
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
+};
+</script>
+</head>
+
+<body>
+<input type="button" value="随机" id="input1">
+<ul id="container">
+	<li><img src="photo/1.jpg" /></li>
+    <li><img src="photo/2.jpg" /></li>
+    <li><img src="photo/3.jpg" /></li>
+    <li><img src="photo/4.jpg" /></li>
+    <li><img src="photo/5.jpg" /></li>
+    <li><img src="photo/1.jpg" /></li>
+    <li><img src="photo/2.jpg" /></li>
+    <li><img src="photo/3.jpg" /></li>
+    <li><img src="photo/4.jpg" /></li>
+</ul>
+</body>
+</html>

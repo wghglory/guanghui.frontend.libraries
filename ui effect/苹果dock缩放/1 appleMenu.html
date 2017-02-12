@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{ margin:0; padding:0;}
+#container{ width:100%; position:absolute; bottom:0; text-align:center;}
+#container img{ width:64px;}
+</style>
+<script>
+
+window.onload = function(){
+	var aInput = document.getElementsByTagName('input');
+	var oDiv = document.getElementById('container');
+	var aImg = oDiv.getElementsByTagName('img');
+	
+	for(var i=0;i<aImg.length;i++){
+		//计算每个图标中心点距离浏览器左侧和上侧距离
+		var x = aImg[i].offsetLeft + aImg[i].offsetWidth/2;
+		var y = aImg[i].offsetTop + aImg[i].offsetHeight/2 + oDiv.offsetTop;
+		
+		aInput[i].value = 'X轴:'+x+',Y轴:' + y;
+	}
+	
+};
+
+</script>
+</head>
+
+<body>
+<input type="text">
+<input type="text">
+<input type="text">
+<input type="text">
+<input type="text">
+<div id="container">
+	<img src="images/1.png">
+    <img src="images/2.png">
+    <img src="images/3.png">
+    <img src="images/4.png">
+    <img src="images/5.png">
+</div>
+</body>
+</html>

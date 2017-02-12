@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>draw a rectangle</title>
+    <style>
+        body {
+            background: black;
+        }
+
+        #c1 {
+            background: white;
+        }
+
+        span {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" width="400" height="400">
+    <span>your browser doesn't support canvas</span>
+    <!--default width is 300 and height 150-->
+</canvas>
+</body>
+
+<script>
+    window.onload = function () {
+        var canvas = document.getElementById("c1");
+        var context = canvas.getContext('2d');   //webgl is 3d
+
+        context.fillStyle ='red';
+        context.strokeStyle = 'blue';
+        context.lineWidth = 10;
+        context.lineJoin = 'bevel';   //round
+
+        context.strokeRect(50, 50, 100, 100);  //边框   x,y, width, height
+        context.fillRect(50, 50, 100, 100);   //填充
+    }
+</script>
+</html>

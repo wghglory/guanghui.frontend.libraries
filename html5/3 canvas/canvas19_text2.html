@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文本居中和阴影</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" height="400" width="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    context.font = '30px impact';
+    context.textBaseline = 'top';  //middle bottom
+    context.fillStyle = 'blue';
+    // context.textAlign = 'left';
+    var text = 'this is the text you will fill';
+    var width = context.measureText(text).width;
+
+    //阴影
+    context.shadowOffsetX = 10;
+    context.shadowOffsetY = 5;
+    context.shadowBlur = 3;
+    context.shadowColor = 'yellow';   //default: black transparent
+
+    //center display
+    context.fillText(text, (canvas.width - width) / 2, (canvas.height - 30) / 2);   //height 30 is font size.
+
+
+</script>
+</html>

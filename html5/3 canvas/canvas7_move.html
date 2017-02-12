@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Move</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c1" width="400" height="400"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    var num = 0;
+    context.fillRect(0, 0, 100, 100);
+
+    setInterval(function () {
+        num++;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillRect(num, num, 100, 100);
+    }, 30);
+</script>
+</html>

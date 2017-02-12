@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+body{margin:0;background:#e8d0ca;}
+ul,li{margin:0;padding:0;list-style:none;}
+img{vertical-align:top;}
+.container{position:relative;width:370px;margin:100px auto 0;}
+#picList{position:relative;height:80px;}
+#picList li{position:absolute;top:-80px;left:0;overflow:hidden;transition:.5s;opacity:0;}
+#picList .active{top:0;opacity:1;}
+#textList{position:relative;overflow:hidden;height:60px;margin-top:30px;}
+#textList li{position:absolute;top:0;left:370px;overflow:hidden;width:100%;height:100%;transition:0.5s;}
+#textList .active{left:0;}
+#btns{display:flex;margin-top:30px;justify-content:flex-end;}
+#btns li{width:16px;height:16px;margin:0 18px;border-radius:50%;background-color:#fbf8f8;box-shadow:inset -3px 11px 50px -20px rgba(0,0,0,.29);}
+#btns li span{display:inline-block;width:12px;height:12px;margin:2px;border-radius:50%;background:#fbf8f8;transform:scale(0);transition:0.5s;}
+#btns li.active span{background:linear-gradient(45deg,#9a1e58 0%,#d82a8a 50%,#e87eba 100%);transform:scale(1);}
+#zoom{position:absolute;top:-13px;left:-92px;width:144px;height:172px;transform-origin:left bottom;background:url(img/iZoom.png) no-repeat;}
+#zoomPic{position:absolute;top:4px;right:4px;overflow:hidden;width:98px;height:98px;border-radius:50%;background:#e8d0ca;/* -webkit-mask:url(img/mask.png) no-repeat 0 0; */}
+#zoomPic .pic{width:98px;height:98px;transform-origin:-44px 170px;border-radius:50%;background:url(img/iBannerTextBig.png) no-repeat;}
+#zoomPic .len{position:absolute;top:0;left:0;width:98px;height:98px;border-radius:50%;background:url(img/iZoomGlass.png) no-repeat;}
+    </style>
+</head>
+
+<body>
+    <section class="container">
+        <ul id="picList">
+            <li class="active">
+                <img src="img/iBannerText.png" />
+            </li>
+            <li>
+                <img src="img/iBannerText2.png" />
+            </li>
+            <li>
+                <img src="img/iBannerText3.png" />
+            </li>
+        </ul>
+        <ul id="textList">
+            <li class="active">DALLAS (AP) - When Micah Johnson opened fire on Dallas police in an act of vengeance against white officers, he was attacking a department</li>
+            <li>Pokémon Go has taken over the world since launching last week, sending millions of users into the streets to collect and battle virtual monsters on their smartphones.</li>
+            <li>CLEVELAND - Delegates to the Republican National Convention began drafting the party's 2016 platform here Monday with presumptive nominee Donald Trump a distant presence in the discussions.</li>
+        </ul>
+        <ul id="btns">
+            <li class="active"><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+        </ul>
+        <div id="zoom">
+            <div id="zoomPic">
+                <div class="pic"></div>
+                <div class="len"></div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

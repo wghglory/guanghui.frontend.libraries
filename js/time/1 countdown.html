@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>在用户刷新或者切换到别的页面，回到该页面倒计时继续，而非reset</title>
+    <style>
+        body {
+            text-align: center;
+            background: #00ECB9;
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+
+        h1 {
+            color: #396;
+            font-weight: 100;
+            font-size: 40px;
+            margin: 40px 0 20px;
+        }
+
+        #clockdiv {
+            font-family: sans-serif;
+            color: #fff;
+            display: inline-block;
+            font-weight: 100;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        #clockdiv > div {
+            padding: 10px;
+            border-radius: 3px;
+            background: #00BF96;
+            display: inline-block;
+        }
+
+        #clockdiv div > span {
+            padding: 15px;
+            border-radius: 3px;
+            background: #00816A;
+            display: inline-block;
+        }
+
+        .smalltext {
+            padding-top: 5px;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Countdown Clock</h1>
+    <div id="clockdiv">
+        <div>
+            <span class="day"></span>
+            <div class="smalltext">Days</div>
+        </div>
+        <div>
+            <span class="hour"></span>
+            <div class="smalltext">Hours</div>
+        </div>
+        <div>
+            <span class="minute"></span>
+            <div class="smalltext">Minutes</div>
+        </div>
+        <div>
+            <span class="second"></span>
+            <div class="smalltext">Seconds</div>
+        </div>
+    </div>
+    <script src="../cookie.js"></script>
+    <script>
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var second = Math.floor((t / 1000) % 60);
+            var minute = Math.floor((t / 1000 / 60) % 60);
+            var hour = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var day = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                'total': t,
+                'day': day,
+                'hour': hour,
+                'minute': minute,
+                'second': second
+            };
+        }
+
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daySpan = clock.querySelector('.day');
+            var hourSpan = clock.querySelector('.hour');
+            var minuteSpan = clock.querySelector('.minute');
+            var secondSpan = clock.querySelector('.second');
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daySpan.innerHTML = t.day;
+                hourSpan.innerHTML = ('0' + t.hour).slice(-2); // 从后面截取2位
+                minuteSpan.innerHTML = ('0' + t.minute).slice(-2);
+                secondSpan.innerHTML = ('0' + t.second).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timer);
+                }
+            }
+
+            updateClock();
+            var timer = setInterval(updateClock, 1000);
+        }
+
+        // 15 days later
+        /////////////////////////////////////////////////////////////////////////////////
+        // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); //
+        /////////////////////////////////////////////////////////////////////////////////
+
+        // 7 hours later
+        ///////////////////////////////////////////////////////////////////////////
+        // var deadline = new Date(Date.parse(new Date()) + 7 * 60 * 60 * 1000); //
+        ///////////////////////////////////////////////////////////////////////////
+
+        // 30 minute later
+        ///////////////////////////////////////////////////////////////////////
+        // var deadline = new Date(Date.parse(new Date()) + 30 * 60 * 1000); //
+        ///////////////////////////////////////////////////////////////////////
+
+        // a specific day 0:00 in future
+        //////////////////////////////////
+        // var deadline = '2016-08-14'; //
+        //////////////////////////////////
+
+        // use firefox to test cookie, otherwise must run in server mode
+        // if there's a cookie with the name myClock, use that value as the deadline
+        if (document.cookie && document.cookie.match('myClock')) {
+            var deadline = getCookie('myClock');
+        }
+        // otherwise, set a deadline 10 minutes from now and save it in a cookie with that name
+        else {
+            var timeInMinutes = 10;
+            var currentTime = Date.parse(new Date());
+            var deadline = new Date(currentTime + timeInMinutes * 60 * 1000);
+
+            setCookie('myClock', deadline, deadline);
+        }
+
+        initializeClock('clockdiv', deadline);
+    </script>
+</body>
+
+</html>

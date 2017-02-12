@@ -1,0 +1,13 @@
+.tabNav { height:35px; border-bottom:1px solid #dadada;padding-left: 30px; }
+
+/*add below if needing round style*/
+/*.tabNav li {  border-top-left-radius: 6px; border-top-right-radius: 6px;}*/
+.tabNav>li { list-style: none;float:left; height:34px; text-align:center; font:16px/34px Arial;font-weight: 600; color:#666; border:1px solid #dadada; position:relative; cursor:pointer;  margin-right: 4px; padding:0 20px;}
+.tabNav~div{display: none;min-height: 400px;padding:10px 0;}
+.tabNav>li.active { border-bottom:1px solid #fff; background:#fff; color:#337ab7; }
+.tabNav>li.gradient {
+	background:-moz-linear-gradient(top, #ededed, #e5e5e5);
+	background:-webkit-linear-gradient(top, #ededed, #e5e5e5);
+	background:-ms-linear-gradient(top, #ededed, #e5e5e5);
+	background:linear-gradient(top, #ededed, #e5e5e5);
+}

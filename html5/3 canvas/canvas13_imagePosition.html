@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        body {
+            background: black;
+        }
+
+        #c1 {
+            background: white;
+        }
+
+    </style>
+    <script>
+        window.onload = function() {
+            var oC = document.getElementById('c1');
+
+            var oGC = oC.getContext('2d');
+
+            var yImg = new Image();
+
+            yImg.src = './images/ma.png';
+            var iNow = 0;
+
+            yImg.onload = function() {
+
+                setInterval(function() {
+
+                    oGC.clearRect(0, 0, oC.width, oC.height);
+                    oGC.drawImage(yImg, 126 * iNow, 0, 126, 120, 50, 50, 126, 120);
+                    if (iNow == 7) {
+                        iNow = 0;
+                    } else {
+                        iNow++;
+                    }
+                }, 100);
+
+
+            };
+
+        };
+    </script>
+</head>
+
+<body>
+    <canvas id="c1" width="400" height="400"></canvas>
+    <!--默认 : 300 * 150-->
+</body>
+
+</html>

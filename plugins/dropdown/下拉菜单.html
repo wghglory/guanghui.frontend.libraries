@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style type="text/css">
+        * {
+        	padding: 0;
+        	margin: 0;
+        	list-style: none;
+        }
+
+        .container {
+        	width: 320px;
+        	height: 30px;
+        	background: #ccc;
+        	margin: 100px auto;
+        	line-height: 30px;
+        	text-align: center;
+        }
+
+        .container ul li {
+        	width: 100px;
+        	height: 30px;
+        	background: #cff;
+        	float: left;
+        	margin-right: 10px;
+        	position: relative;
+        	cursor: pointer;
+        }
+
+        .container ul>li:last-child {
+        	margin: 0;
+        }
+
+        .container ul ul {
+        	position: absolute;
+        	left: 0;
+        	top: 30px;
+        	display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul id="list">
+            <li>一级菜单
+                <ul>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>一级菜单
+                <ul>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>一级菜单
+                <ul>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script>
+    function List(id) {  // constructor
+        this.ul = document.getElementById(id);
+        this.lis = this.ul.children; // 获取一级菜单所有的li
+    }
+
+    List.prototype.init = function() { // 遍历所有的li 显示和隐藏
+        var instance = this;
+        for (var i = 0; i < this.lis.length; i++) {
+            this.lis[i].index = i;
+            this.lis[i].onmouseover = function() {
+                instance.show(this.children[0]); //  显示出来
+            };
+            this.lis[i].onmouseout = function() {
+                instance.hide(this.children[0]); // 隐藏起来
+            };
+        }
+    };
+    //  显示模块
+    List.prototype.show = function(obj) {
+        obj.style.display = "block";
+    };
+    // 隐藏模块
+    List.prototype.hide = function(obj) {
+        obj.style.display = "none";
+    };
+
+    var list = new List("list");
+    list.init();
+</script>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>直接创建</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            color: white;
+        }
+
+        #c1 {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<p>click left li</p>
+<canvas id="c1" width="400" height="400"></canvas>
+<ul style="float:left;">
+    <li>M</li>
+    <li>A</li>
+    <li>R</li>
+    <li>K</li>
+</ul>
+</body>
+<script>
+
+    var canvas = document.getElementById('c1');
+    var context = canvas.getContext('2d');
+
+    var li = document.getElementsByTagName('li');
+    for (var i = 0; i < li.length; i++) {
+        li[i].onclick = function () {
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            var text = this.innerHTML;
+
+            var height = 180;
+            context.font = height + 'px impact';
+            context.textBaseline = 'top';  //middle bottom
+            context.fillStyle = 'blue';
+
+            var width = context.measureText(text).width;
+
+            var x = (canvas.width - width) / 2;
+            var y = (canvas.height - height) / 2;
+            //center display
+            context.fillText(text, x, y);   //height is font size.
+
+            var img = context.getImageData(x, y, width, height);
+
+            context.putImageData(img, x, y);
+        };
+    }
+
+</script>
+</html>
