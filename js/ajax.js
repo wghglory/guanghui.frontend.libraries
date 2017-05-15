@@ -30,7 +30,11 @@ function parseJson2Querystring(json) {
  * @param  {[function]} fnSuccess [callback if sucess]
  * @param  {[function]} fnFail    [callback if fail]
  */
-function ajax(method, url, data, fnSuccess, fnFail) {
+export function ajax({ method = 'get',  url, data, fnSuccess, fnFail }) {
+    if (typeof data !== 'string') {
+        data = parseJson2Querystring(data);
+    }
+
     //1.创建Ajax对象
     var xhr = null;
     if (window.XMLHttpRequest) {
