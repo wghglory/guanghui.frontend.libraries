@@ -34,107 +34,102 @@ window.onload = function() {
 */
 
 function pagination(pageInfo) {
+  if (!pageInfo.id) {
+    return false;
+  }
+  // -------------------------分页链接生成 开始-----------------------------------
+  var paginationObj = document.getElementById(pageInfo.id);
 
-    if (!pageInfo.id) {
-        return false;
+  paginationObj.innerHTML = ''; // 清空
+
+  var pageIndex = pageInfo.pageIndex || 1;
+  var pageSize = pageInfo.pageSize || 5;
+  var pageCount = Math.ceil(pageInfo.totalCount / pageSize);
+  var callBack = pageInfo.callBack || function() {};
+  var aClick = pageInfo.aClick || function() {};
+  var delayTime = pageInfo.delayTime || 0;
+
+  if (pageIndex >= 4 && pageCount >= 6) {
+    var oA = document.createElement('a');
+    oA.href = '#1';
+    oA.innerHTML = '首页';
+    paginationObj.appendChild(oA);
+  }
+
+  if (pageIndex >= 2) {
+    var oA = document.createElement('a');
+    oA.href = '#' + (pageIndex - 1);
+    oA.innerHTML = '上一页';
+    paginationObj.appendChild(oA);
+  }
+
+  if (pageCount <= 5) {
+    for (var i = 1; i <= pageCount; i++) {
+      var oA = document.createElement('a');
+      oA.href = '#' + i;
+      if (pageIndex == i) {
+        oA.innerHTML = i; //oA.innerHTML = '[' + i + ']';
+        oA.className = 'active';
+      } else {
+        oA.innerHTML = i;
+      }
+      paginationObj.appendChild(oA);
     }
-    // -------------------------分页链接生成 开始-----------------------------------
-    var paginationObj = document.getElementById(pageInfo.id);
+  } else {
+    for (var i = 1; i <= 5; i++) {
+      var oA = document.createElement('a');
 
-    paginationObj.innerHTML = '';  // 清空
-
-    var pageIndex = pageInfo.pageIndex || 1;
-    var pageSize = pageInfo.pageSize || 5;
-    var pageCount = Math.ceil(pageInfo.totalCount / pageSize);
-    var callBack = pageInfo.callBack || function() {};
-    var aClick = pageInfo.aClick || function() {};
-    var delayTime = pageInfo.delayTime || 0;
-
-    if (pageIndex >= 4 && pageCount >= 6) {
-        var oA = document.createElement('a');
-        oA.href = '#1';
-        oA.innerHTML = '首页';
-        paginationObj.appendChild(oA);
-    }
-
-    if (pageIndex >= 2) {
-        var oA = document.createElement('a');
-        oA.href = '#' + (pageIndex - 1);
-        oA.innerHTML = '上一页';
-        paginationObj.appendChild(oA);
-    }
-
-    if (pageCount <= 5) {
-        for (var i = 1; i <= pageCount; i++) {
-            var oA = document.createElement('a');
-            oA.href = '#' + i;
-            if (pageIndex == i) {
-                oA.innerHTML = i; //oA.innerHTML = '[' + i + ']';
-                oA.className = 'active';
-            } else {
-                oA.innerHTML = i;
-            }
-            paginationObj.appendChild(oA);
+      if (pageIndex == 1 || pageIndex == 2) {
+        oA.href = '#' + i;
+        if (pageIndex == i) {
+          oA.innerHTML = i; //oA.innerHTML = '[' + i + ']';
+          oA.className = 'active';
+        } else {
+          oA.innerHTML = i;
         }
-    } else {
-
-        for (var i = 1; i <= 5; i++) {
-            var oA = document.createElement('a');
-
-            if (pageIndex == 1 || pageIndex == 2) {
-                oA.href = '#' + i;
-                if (pageIndex == i) {
-                    oA.innerHTML = i; //oA.innerHTML = '[' + i + ']';
-                    oA.className = 'active';
-                } else {
-                    oA.innerHTML = i;
-                }
-            } else if ((pageCount - pageIndex) == 0 || (pageCount - pageIndex) == 1) {
-                oA.href = '#' + (pageCount - 5 + i);
-                if ((pageCount - pageIndex) == 0 && i == 5) {
-                    oA.innerHTML = (pageCount - 5 + i); //oA.innerHTML = '[' + (pageCount - 5 + i) + ']';
-                    oA.className = 'active';
-                } else if ((pageCount - pageIndex) == 1 && i == 4) {
-                    oA.innerHTML = (pageCount - 5 + i); //oA.innerHTML = '[' + (pageCount - 5 + i) + ']';
-                    oA.className = 'active';
-                } else {
-                    oA.innerHTML = (pageCount - 5 + i);
-                }
-            } else {
-                oA.href = '#' + (pageIndex - 3 + i);
-                if (i == 3) {
-                    oA.innerHTML = (pageIndex - 3 + i); //oA.innerHTML = '[' + (pageIndex - 3 + i) + ']';
-                    oA.className = 'active';
-                } else {
-                    oA.innerHTML = (pageIndex - 3 + i);
-                }
-            }
-            paginationObj.appendChild(oA);
-
+      } else if (pageCount - pageIndex == 0 || pageCount - pageIndex == 1) {
+        oA.href = '#' + (pageCount - 5 + i);
+        if (pageCount - pageIndex == 0 && i == 5) {
+          oA.innerHTML = pageCount - 5 + i; //oA.innerHTML = '[' + (pageCount - 5 + i) + ']';
+          oA.className = 'active';
+        } else if (pageCount - pageIndex == 1 && i == 4) {
+          oA.innerHTML = pageCount - 5 + i; //oA.innerHTML = '[' + (pageCount - 5 + i) + ']';
+          oA.className = 'active';
+        } else {
+          oA.innerHTML = pageCount - 5 + i;
         }
-
+      } else {
+        oA.href = '#' + (pageIndex - 3 + i);
+        if (i == 3) {
+          oA.innerHTML = pageIndex - 3 + i; //oA.innerHTML = '[' + (pageIndex - 3 + i) + ']';
+          oA.className = 'active';
+        } else {
+          oA.innerHTML = pageIndex - 3 + i;
+        }
+      }
+      paginationObj.appendChild(oA);
     }
+  }
 
-    if (pageCount - pageIndex >= 1) {
-        var oA = document.createElement('a');
-        oA.href = '#' + (pageIndex + 1);
-        oA.innerHTML = '下一页';
-        paginationObj.appendChild(oA);
-    }
+  if (pageCount - pageIndex >= 1) {
+    var oA = document.createElement('a');
+    oA.href = '#' + (pageIndex + 1);
+    oA.innerHTML = '下一页';
+    paginationObj.appendChild(oA);
+  }
 
-    if (pageCount - pageIndex >= 3 && pageCount >= 6) {
-        var oA = document.createElement('a');
-        oA.href = '#' + pageCount;
-        oA.innerHTML = '尾页';
-        paginationObj.appendChild(oA);
-    }
+  if (pageCount - pageIndex >= 3 && pageCount >= 6) {
+    var oA = document.createElement('a');
+    oA.href = '#' + pageCount;
+    oA.innerHTML = '尾页';
+    paginationObj.appendChild(oA);
+  }
 
-    // --------------------------------分页链接生成 结束------------------------------
+  // --------------------------------分页链接生成 结束------------------------------
+  // 加载完分页表前后执行函数
+  callBack(pageIndex, pageSize, pageCount, paginationObj);
 
-    //加载完分页表前后执行函数
-    callBack(pageIndex, pageSize, pageCount, paginationObj);
-
-    /* 添加点击事件（传统）
+  /* 添加点击事件（传统）
     var aA = paginationObj.getElementsByTagName('a');
 
     for (var i = 0; i < aA.length; i++) {
@@ -155,49 +150,39 @@ function pagination(pageInfo) {
     }
     */
 
-    // 添加点击事件(用事件代理委托)
-    paginationObj.onclick = function(ev) {
+  // 添加点击事件(用事件代理委托)
+  paginationObj.onclick = function(ev) {
+    var ev = ev || window.event;
+    var target = ev.target || ev.srcElement;
 
+    if (target.nodeName.toLowerCase() == 'a') {
+      aClick(target);
 
-        var ev = ev || window.event;
-        var target = ev.target || ev.srcElement;
+      if (pageInfo.delayTime == 0) {
+        nextCall();
+      } else {
+        var timer = setTimeout(function() {
+          nextCall();
+          clearTimeout(timer);
+        }, pageInfo.delayTime);
+      }
 
-        if (target.nodeName.toLowerCase() == 'a') {
+      return false; //阻止默认事件（a点击在浏览器显示#)
+    }
 
-            aClick(target);
+    function nextCall() {
+      var pageIndex = parseInt(target.getAttribute('href').substring(1)); //getAttribute才能返回相对路径
+      paginationObj.innerHTML = '';
 
-            if (pageInfo.delayTime == 0) {
-                nextCall();
-            } else {
-                var timer = setTimeout(function() {
-                    nextCall();
-                    clearTimeout(timer);
-                }, pageInfo.delayTime);
-            }
-
-            return false; //阻止默认事件（a点击在浏览器显示#)
-
-        }
-
-
-        function nextCall() {
-
-            var pageIndex = parseInt(target.getAttribute('href').substring(1)); //getAttribute才能返回相对路径
-
-            paginationObj.innerHTML = '';
-
-            pagination({
-                id: pageInfo.id,
-                pageIndex: pageIndex, // 当前要显示页面，1开始
-                pageSize: pageSize, // 每页显示条数
-                totalCount: pageInfo.totalCount, // 总数据个数， 总页码pageCount = Math.ceil(totalCount/pageSize)
-                callBack: callBack,
-                aClick: aClick,
-                delayTime: delayTime
-            });
-
-        }
-
-    };
-
+      pagination({
+        id: pageInfo.id,
+        pageIndex: pageIndex, // 当前要显示页面，1开始
+        pageSize: pageSize, // 每页显示条数
+        totalCount: pageInfo.totalCount, // 总数据个数， 总页码pageCount = Math.ceil(totalCount/pageSize)
+        callBack: callBack,
+        aClick: aClick,
+        delayTime: delayTime
+      });
+    }
+  };
 }
