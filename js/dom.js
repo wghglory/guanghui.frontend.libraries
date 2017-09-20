@@ -5,96 +5,94 @@
  * @return {[type]}     [description]
  */
 function getIndex(obj) {
-    // var siblingsAndSelf = getChildren(obj.parentNode);
-    var siblingsAndSelf = obj.parentNode.children;
-    for (var i = 0; i < siblingsAndSelf.length; i++) {
-        if (obj == siblingsAndSelf[i]) {
-            return i;
-        }
+  // var siblingsAndSelf = getChildren(obj.parentNode);
+  var siblingsAndSelf = obj.parentNode.children;
+  for (var i = 0; i < siblingsAndSelf.length; i++) {
+    if (obj == siblingsAndSelf[i]) {
+      return i;
     }
+  }
 }
 
 function getPrevAll(obj, isIncludeSelf) {
-    var children = getChildren(obj.parentNode);
-    for (var i = 0; i < children.length; i++) {
-        if (obj == children[i]) {
-            var removed = isIncludeSelf ? children.splice(i + 1) : children.splice(i);
-        }
+  var children = getChildren(obj.parentNode);
+  for (var i = 0; i < children.length; i++) {
+    if (obj == children[i]) {
+      var removed = isIncludeSelf ? children.splice(i + 1) : children.splice(i);
     }
-    return children;
+  }
+  return children;
 }
 
 function getNextAll(obj, isIncludeSelf) {
-    var children = getChildren(obj.parentNode);
-    for (var i = 0; i < children.length; i++) {
-        if (obj == children[i]) {
-            var removed = isIncludeSelf ? children.splice(0, i) : children.splice(0, i + 1);
-        }
+  var children = getChildren(obj.parentNode);
+  for (var i = 0; i < children.length; i++) {
+    if (obj == children[i]) {
+      var removed = isIncludeSelf ? children.splice(0, i) : children.splice(0, i + 1);
     }
-    return children;
+  }
+  return children;
 }
 
 function getSiblings(obj) {
-    var children = getChildren(obj.parentNode);
-    for (var i = 0; i < children.length; i++) {
-        if (obj == children[i]) {
-            var self = children.splice(i, 1);
-        }
+  var children = getChildren(obj.parentNode);
+  for (var i = 0; i < children.length; i++) {
+    if (obj == children[i]) {
+      var self = children.splice(i, 1);
     }
-    return children;
+  }
+  return children;
 }
 
 function getChildren(currentNode) {
-    // var childrenElem = currentNode.childNodes;
-    // var children = [];
-    // for (var i = 0; i < childrenElem.length; i++) {
-    //     if (childrenElem[i].nodeName == "#text" && !/\s/.test(childrenElem.nodeValue)) {
-    //         currentNode.removeChild(childrenElem[i]);
-    //     } else {
-    //         child.push(childrenElem[i]);
-    //     }
-    // }
-    // return children;
-    return currentNode.children;
+  // var childrenElem = currentNode.childNodes;
+  // var children = [];
+  // for (var i = 0; i < childrenElem.length; i++) {
+  //     if (childrenElem[i].nodeName == "#text" && !/\s/.test(childrenElem.nodeValue)) {
+  //         currentNode.removeChild(childrenElem[i]);
+  //     } else {
+  //         child.push(childrenElem[i]);
+  //     }
+  // }
+  // return children;
+  return currentNode.children;
 }
 
 function removeNode(obj) {
-    obj.parentNode.removeChild(obj);
+  obj.parentNode.removeChild(obj);
 }
 
-
 function indexInArray(arr, element) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == element) {
-            return i;
-        }
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == element) {
+      return i;
     }
-    return -1;
+  }
+  return -1;
 }
 
 /**
- * insert obj after refObj
- * @method insertAfter
- * @param  {[type]}    obj    [description]
- * @param  {[type]}    refObj [description]
- * @return {[type]}           [description]
- */
+  * insert obj after refObj
+  * @method insertAfter
+  * @param  {[type]}    obj    [description]
+  * @param  {[type]}    refObj [description]
+  * @return {[type]}           [description]
+  */
 function insertAfter(obj, refObj) {
-    var parent = refObj.parentNode;
-    var nextElement = refObj.nextElementSibling;
-    if (nextElement) {
-        return parent.insertBefore(obj, nextElement);
-    } else {
-        return parent.appendChild(obj);
-    }
+  var parent = refObj.parentNode;
+  var nextElement = refObj.nextElementSibling;
+  if (nextElement) {
+    return parent.insertBefore(obj, nextElement);
+  } else {
+    return parent.appendChild(obj);
+  }
 }
 
-
 /*
- *old functions, now brower has better methods
-function addClass(obj, classname) { //添加class样式
+  *old functions, now browser has better methods
+  function addClass(obj, classname) { //添加class样式
     obj.classList.add(classname);
-    
+
     // var aClass = obj.className.split(' ');
     // if (!obj.className) {
     //     obj.className = classname;
@@ -114,12 +112,12 @@ function addClass(obj, classname) { //添加class样式
     //         obj.className += ' ' + classname;
     //     }
     // }
-}
+  }
 
 
-function removeClass(obj, classname) { //移除class样式
+  function removeClass(obj, classname) { //移除class样式
     obj.classList.remove(classname);
-    
+
     // var aClass = obj.className.split(' ');
     // if (!obj.className) return;
     // for (var i = 0; i < aClass.length; i++) {
@@ -138,9 +136,9 @@ function removeClass(obj, classname) { //移除class样式
     //         obj.className = arrClassName.join(' ');
     //     }
     // }
-}
+  }
 
-function hasClass(obj, classname) { //添加class样式
+  function hasClass(obj, classname) { //添加class样式
     obj.classList.contains(classname);
     // var aClass = obj.className.split(' ');
     // if (!obj.className) {
@@ -150,9 +148,9 @@ function hasClass(obj, classname) { //添加class样式
     //     if (aClass[i] === classname) return true;
     // }
     // return false;
-}
+  }
 
-function getByClass(parent, tagname, classname) { //通过Class名字获取元素
+  function getByClass(parent, tagname, classname) { //通过Class名字获取元素
     var aEls = parent.getElementsByTagName(tagname);
     return aEls.querySelectorAll(classname);
     // var arr = [];
@@ -163,8 +161,8 @@ function getByClass(parent, tagname, classname) { //通过Class名字获取元�
     //     }
     // }
     // return arr;
-}
-function getByClass(parent, classname) {
+  }
+  function getByClass(parent, classname) {
     var eles = parent.getElementsByTagName('*');
     var result = [];
 
@@ -178,11 +176,11 @@ function getByClass(parent, classname) {
         }
     }
     return result;
-}
+  }
 
 
-//not useful
-function getByParent(obj, tagname, classname) { // 通过父级的className以及tagName获取元素
+  //not useful
+  function getByParent(obj, tagname, classname) { // 通过父级的className以及tagName获取元素
     var re = new RegExp('(^|\\s)' + classname + '(\\s|$)');
     while (obj.parentNode) {
         if (obj.parentNode.tagName != tagname) {
@@ -196,5 +194,5 @@ function getByParent(obj, tagname, classname) { // 通过父级的className以�
         }
 
     }
-}
-*/
+  }
+  */
