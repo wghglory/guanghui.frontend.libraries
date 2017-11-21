@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>flex 实现自适应宽度列表</title>
+    <style>
+        section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            /* flex-grow: 1;
+            flex-basis: 300px; */
+            flex: 1 300px;
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #222;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <ul>
+            <li>
+                <h2>Ryu</h2>
+            </li>
+            <li>
+                <h2>Crystal</h2>
+            </li>
+            <li>
+                <h2>Hitoshi</h2>
+            </li>
+            <li>
+                <h2>Tango</h2>
+            </li>
+            <li
+                <h2>Kami</h2>
+            </li>
+            <li>
+                <h2>Yoshi</h2>
+            </li>
+        </ul>
+    </section>
+</body>
+
+</html>
